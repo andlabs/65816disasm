@@ -5,6 +5,8 @@ type MemoryMap interface {
 	Physical(logical uint32) (physical uint32, inROM bool)
 }
 
+var memmap MemoryMap
+
 type lowrom struct{}
 
 func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
