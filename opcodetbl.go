@@ -79,6 +79,7 @@ func init() {
 	0x80:	op_branch("bra")			// bra addr
 
 	// brk: trigger software interrupt
+	// TODO handle signature byte?
 	0x00:	op_noarguments("brk")		// brk
 
 	// brl: branch to 16-bit offset
@@ -89,3 +90,75 @@ func init() {
 
 	// bvs: branch on overflow set
 	0x70:	op_branch("bvs")			// bvs addr
+
+	// clc: clear carry flag
+	0x18:	op_noarguments("clc")		// clc
+
+	// cld: clear decimal flag
+	0xD8:	op_noarguments("cld")		// cld
+
+	// cli: enable interrupts
+	0x58:	op_noarguments("cli")		// cli
+
+	// clv: clear overflow flag
+	0xB8:	op_noarguments("clv")		// clv
+
+	// cmp: compare to a
+	0xC9:	op_immediate("cmp")		// cmp #nn
+	0xCD:	op_absolute("cmp")			// cmp hhll
+	0xCF:	op_absolutelong("cmp")		// cmp hhllmm
+	0xC5:	op_direct("cmp")			// cmp nn
+	0xD2:	op_indirect("cmp")			// cmp (nn)
+	0xC7:	op_indirectlong("cmp")		// cmp [nn]
+	0xDD:	op_absolutex("cmp")		// cmp hhll,x
+	0xDF:	op_absolutelongx("cmp")		// cmp hhllmm,x
+	0xD9:	op_absolutey("cmp")		// cmp hhll,y
+	0xD5:	op_directx("cmp")			// cmp nn,x
+	0xC1:	op_indirectx("cmp")			// cmp (nn,x)
+	0xD1:	op_indirecty("cmp")			// cmp (nn),y
+	0xD7:	op_indirectlongy("cmp")		// cmp [nn],y
+	0xC3:	op_stack("cmp")			// cmp nn,s
+	0xD3:	op_indirectstack("cmp")		// cmp (nn,s),y
+
+	// cop: call coprocessor
+	0x02:	op_immediate("cop")		// cop #nn
+
+	// cpx: compare to x
+	0xE0:	op_immediate("cpx")		// cpx #nn
+	0xEC:	op_absolute("cpx")			// cpx hhll
+	0xE4:	op_direct("cpx")			// cpx nn
+
+	// cpy: compare to y
+	0xC0:	op_immediate("cpy")		// cpy #nn
+	0xCC:	op_absolute("cpy")			// cpy hhll
+	0xC4:	op_direct("cpy")			// cpy nn
+
+	// dec: decrement
+	0x3A:	op_accumulator("dec")		// dec a
+	0xCE:	op_absolute("dec")			// dec hhll
+	0xC6:	op_direct("dec")			// dec nn
+	0xDE:	op_absolutex("dec")			// dec hhll,x
+	0xD6:	op_directx("dec")			// dec nn,x
+
+	// dex: decrement x
+	0xCA:	op_noarguments("dex")		// dex
+
+	// dey: decrement y
+	0x88:	op_noarguments("dey")		// dey
+
+	// eor: bitwise xor
+	0x49:	op_immediate("eor")		// eor #nn
+	0x4D:	op_absolute("eor")			// eor hhll
+	0x4F:	op_absolutelong("eor")		// eor hhllmm
+	0x45:	op_direct("eor")			// eor nn
+	0x52:	op_indirect("eor")			// eor (nn)
+	0x47:	op_indirectlong("eor")		// eor [nn]
+	0x5D:	op_absolutex("eor")			// eor hhll,x
+	0x5F:	op_absolutelongx("eor")		// eor hhllmm,x
+	0x59:	op_absolutey("eor")			// eor hhll,y
+	0x55:	op_directx("eor")			// eor nn,x
+	0x41:	op_indirectx("eor")			// eor (nn,x)
+	0x51:	op_indirecty("eor")			// eor (nn),y
+	0x57:	op_indirectlongy("eor")		// eor [nn],y
+	0x43:	op_stack("eor")			// eor nn,s
+	0x53:	op_indirectstack("eor")		// eor (nn,s),y
