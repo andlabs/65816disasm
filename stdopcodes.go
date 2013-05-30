@@ -72,11 +72,11 @@ func op_accumulator(m string) opcode {
 func op_transfer(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
+		dest, pos := getbyte(pos)				// binary dest,src; assembler src,dest
 		src, pos := getbyte(pos)
-		dest, pos := getbyte(pos)
 		addBankComment(pos - 3, src)
 		addBankComment(pos - 3, dest)
-		return fmt.Sprintf("%s\t$%02X,$%02X", m, src, dest), pos, false
+		return fmt.Sprintf("%s\t#$%02X,#$%02X", m, src, dest), pos, false
 	}
 }
 
