@@ -162,3 +162,72 @@ func init() {
 	0x57:	op_indirectlongy("eor")		// eor [nn],y
 	0x43:	op_stack("eor")			// eor nn,s
 	0x53:	op_indirectstack("eor")		// eor (nn,s),y
+
+	// inc: increment
+	0x1A:	op_accumulator("inc")		// inc a
+	0xEE:	op_absolute("inc")			// inc hhll
+	0xE6:	op_direct("inc")			// inc nn
+	0xFE:	op_absolutex("inc")			// inc hhll,x
+	0xF6:	op_directx("inc")			// inc nn,x
+
+	// inx: increment x
+	0xE8:	op_noarguments("inx")		// inx
+
+	// iny: increment y
+	0xC8:	op_noarguments("iny")		// iny
+
+	// jmp: jump
+	0x4C:	jmp_absolute				// jmp hhll
+	0x6C:	jmp_absoluteindirect		// jmp (hhll)
+	0x7C:	jmp_absoluteindirectx		// jmp (hhll,x)
+	0x5C:	jmp_absolutelong			// jmp hhllmm
+	0xDC:	jmp_absolutelongindirect	// jmp [hhllmm]
+
+	// jsr: jump to subroutine
+	0x20:	jsr_absolute				// jsr hhll
+	0xFC:	jsr_absoluteindirectx		// jsr (hhll,x)
+	0x22:	jsr_absolutelong			// jsr hhllmm
+
+	// lda: load a
+	0xA9:	lda_immediate				// lda #nn
+	0xAD:	op_absolute("lda")			// lda hhll
+	0xAF:	op_absoluelong("lda")		// lda hhllmm
+	0xA5:	op_direct("lda")			// lda nn
+	0xB2:	op_indirect("lda")			// lda (nn)
+	0xA7:	op_indirectlong("lda")		// lda [nn]
+	0xBD:	op_absolutex("lda")			// lda hhll,x
+	0xBF:	op_absolutelongx("lda")		// lda hhllmm,x
+	0xB9:	op_absolutey("lda")			// lda hhll,y
+	0xB5:	op_directx("lda")			// lda nn,x
+	0xA1:	op_indirectx("lda")			// lda (nn,x)
+	0xB1:	op_indirecty("lda")			// lda (nn),y
+	0xB7:	op_indirectlongy("lda")		// lda [nn],y
+	0xA3:	op_stack("lda")				// lda nn,s
+	0xB3:	op_indirectstack("lda")		// lda (nn,s),y
+
+	// ldx: load x
+	0xA2:	op_immediateindex("ldx")	// ldx #nn
+	0xAE:	op_absolute("ldx")			// ldx hhll
+	0xA6:	op_direct("ldx")			// ldx nn
+	0xBE:	op_absolutey("ldx")			// ldx hhll,y
+	0xB6:	op_directy("ldx")			// ldx nn,y
+
+	// ldy: load y
+	0xA0:	op_immediateindex("ldy")	// ldy #nn
+	0xAC:	op_absolute("ldy")			// ldy hhll
+	0xA4:	op_direct("ldy")			// ldy nn
+	0xBC:	op_absolutex("ldy")			// ldy hhll,x
+	0xB4:	op_directx("ldy")			// ldy nn,x
+
+	// lsr: logical shift right
+	0x4A:	op_accumulator("lsr")		// lsr a
+	0x4E:	op_absolute("lsr")			// lsr hhll
+	0x46:	op_direct("lsr")				// lsr nn
+	0x5E:	op_absolutex("lsr")			// lsr hhll,x
+	0x56:	op_directx("lsr")			// lsr nn,x
+
+	// mvn: transfer memory, incrementing addresses
+	0x54:	op_transfer("mvn")			// mvn #nn,#nn
+
+	// mvp: transfer memory, decrementing addresses
+	0x44:	op_transfer("mvp")			// mvp #nn,#nn
