@@ -231,3 +231,23 @@ func init() {
 
 	// mvp: transfer memory, decrementing addresses
 	0x44:	op_transfer("mvp")			// mvp #nn,#nn
+
+	// nop: no operation
+	0xEA:	op_noarguments("nop")		// nop
+
+	// ora: bitwise or
+	0x09:	op_immediate("ora")		// ora #nn
+	0x0D:	op_absolute("ora")			// ora hhll
+	0x0F:	op_absolutelong("ora")		// ora hhllmm
+	0x05:	op_direct("ora")			// ora nn
+	0x12:	op_indirect("ora")			// ora (nn)
+	0x07:	op_indirectlong("ora")		// ora [nn]
+	0x1D:	op_absolutex("ora")			// ora hhll,x
+	0x1F:	op_absolutelongx("ora")		// ora hhllmm,x
+	0x19:	op_absolutey("ora")			// ora hhll,y
+	0x15:	op_directx("ora")			// ora nn,x
+	0x01:	op_indirectx("ora")			// ora (nn,x)
+	0x11:	op_indirecty("ora")			// ora (nn),y
+	0x17:	op_indirectlongy("ora")		// ora [nn],y
+	0x03:	op_stack("ora")			// ora nn,s
+	0x13:	op_indirectstack("ora")		// ora (nn,s),y
