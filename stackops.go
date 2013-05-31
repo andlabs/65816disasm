@@ -67,15 +67,9 @@ func phk_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 
 // php
 func php_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
-	stop := false
 	p, err := getp()
-	if err != nil {
-		addcomment(pos - 1, "(!) cannot push p on stack: %v", err)
-		stop = true
-	} else {
-		pushbyte(p, true)
-	}
-	return fmt.Sprintf("php"), pos, stop
+	pushbyte(p, err == nil)		// if there is an error, then make p unknown
+	return fmt.Sprintf("php"), pos, false
 }
 
 // phx
