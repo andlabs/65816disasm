@@ -397,7 +397,7 @@ func init() {
 
 	// tay: transfer a to y
 	// opcode taken from http://oxyron.de/html/opcodes816.html because the official WDC programming manual has an error: they accidentally listed the tax opcode table on the tay page and they do not seem to have an errata document on their site
-	0x8A:	op_noarguments("tay"),		// tay
+	0xAB:	op_noarguments("tay"),		// tay
 
 	// tcd/tad: transfer a to d
 	// I will use tad for consistency
