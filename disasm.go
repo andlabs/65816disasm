@@ -37,12 +37,29 @@ func disassemble(pos uint32) {
 	}
 }
 
+func getbyte(pos uint32) (w byte, newpos uint32) {
+	b = bytes[pos]
+	pos++
+	return b, pos
+}
+
 func getword(pos uint32) (w uint16, newpos uint32) {
 	w = uint16(bytes[pos])
 	pos++
 	w |= uint16(bytes[pos]) << 8
 	pos++
 	return w, pos
+}
+
+// actually only gets 24 bits; there's nothing on the 65816 that deals with 32-bit values, only 24-bit ones
+func getlong(pos uint32) (l uint32, newpos uint32) {
+	l = uint32(bytes[pos])
+	pos++
+	l |= uint32(bytes[pos]) << 8
+	pos++
+	l |= uint32(bytes[pos]) << 16
+	pos++
+	return l, pos
 }
 
 // TODO watch for labels that cross into multi-byte instructions (that's what operandString is for)
