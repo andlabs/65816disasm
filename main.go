@@ -24,11 +24,22 @@ const (
 )
 
 var vectorLocs = map[uint32]string{
-	0x1FFE:	"EntryPoint",
-	0x1FFC:	"NMI",
-	0x1FFA:	"TimerInterrupt",
-	0x1FF8:	"IRQ1",
-	0x1FF6:	"IRQ2_BRK",
+	0x00FFFE:	"EmuIRQBRK",
+	0x00FFFC:	"EmuRESET",
+	0x00FFFA:	"EmuNMI",
+	0x00FFF8:	"EmuABORT",
+	0x00FFF6:	"EmuReserved1",
+	0x00FFF4:	"EmuCOP",
+	0x00FFF2:	"EmuReserved2",
+	0x00FFF0:	"EmuReserved3",
+	0x00FFEE:	"NativeIRQ",
+	0x00FFEC:	"NativeReserved1",
+	0x00FFEA:	"NativeNMI",
+	0x00FFE8:	"NativeABORT",
+	0x00FFE6:	"NativeBRK",
+	0x00FFE4:	"NativeCOP",
+	0x00FFE2:	"NativeReserved2",
+	0x00FFE0:	"NativeReserved3",
 }
 
 func errorf(format string, args ...interface{}) {
@@ -36,13 +47,13 @@ func errorf(format string, args ...interface{}) {
 	os.Exit(1)
 }
 
-// command-line options
-var (
-	useStack = flag.Bool("stack", false, "follow stack for tam/tma values (may fix some broken disassemblies but breaks if some subroutine breaks the push/pop system (TODO add jsr and rts))")
-)
-
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: %s [-stack] ROM\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "usage: %s ROM mode\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "mode must be one of:")
+	for m := range memmaps {
+		fmt.Fprintf(os.Stderr, " %s", m)
+	}
+	fmt.Fprintf(os.Stderr, "\n")
 	flag.PrintDefaults()
 	os.Exit(1)
 }
@@ -52,11 +63,18 @@ func main() {
 
 	flag.Usage = usage
 	flag.Parse()
-	if flag.NArg() != 1 {
+	if flag.NArg() != 2 {
 		usage()
 	}
 
 	filename := flag.Arg(0)
+
+	wantedmap := flag.Arg(1)
+	if _, ok := memmaps[wantedmap]; !ok {
+		fmt.Fprintf(os.Stderr, "unsupported memory map %q\n", wantedmap)
+		usage()
+	}
+	memmap = memmaps[wantedmap]
 
 	bytes, err = ioutil.ReadFile(filename)
 	if err != nil {
