@@ -389,3 +389,71 @@ func init() {
 	0x64:	op_direct("stz")			// stz nn
 	0x9E:	op_absolutex("stz")			// stz hhll,x
 	0x74:	op_directx("stz")			// stz nn,x
+
+	// tax: transfer a to x
+	0xAA:	op_noarguments("tax")		// tax
+
+	// tay: transfer a to y
+	// opcode taken from http://oxyron.de/html/opcodes816.html because the official WDC programming manual has an error: they accidentally listed the tax opcode table on the tay page and they do not seem to have an errata document on their site
+	0x8A:	op_noarguments("tay")		// tay
+
+	// tcd/tad: transfer a to d
+	// I will use tad for consistency
+//	0x5B:	op_noarguments("tcd")		// tcd
+	0x5B:	op_noarguments("tad")		// tad
+
+	// tcs/tas: transfer a to s
+	// I will use tas for consistency
+//	0x1B:	op_noarguments("tcs")		// tcs
+	0x1B:	op_noarguments("tas")		// tas
+
+	// tdc/tda: transfer d to a
+	// I will use tda for consistency
+//	0x7B:	op_noarguments("tdc")		// tdc
+	0x7B:	op_noarguments("tda")		// tda
+
+	// trb: test, then clear, bits against bits in a
+	0x1C:	op_absolute("trb")			// trb hhll
+	0x14:	op_direct("trb")			// trb nn
+
+	// tsb: test, then set, bits against bits in a
+	0x0C:	op_absolute("tsb")			// tsb hhll
+	0x04:	op_direct("tsb")			// tsb nn
+
+	// tsc/tsa: transfer s to a
+	// I will use tsa for consistency
+//	0x3B:	op_noarguments("tsc")		// tsc
+	0x3B:	op_noarguments("tsa")		// tsa
+
+	// tsx: transfer s to x
+	0xBA:	op_noarguments("tsx")		// tsx
+
+	// txa: transfer x to a
+	0x8A:	op_noarguments("txa")		// txa
+
+	// txs: transfer x to s
+	0x9A:	op_noarguments("txs")		// txs
+
+	// txy: transfer x to y
+	0x9B:	op_noarguments("txy")		// txy
+
+	// tya: transfer y to a
+	0x98:	op_noarguments("tya")		// tya
+
+	// tyx: transfer y to x
+	0xBB:	op_noarguments("tyx")		// tyx
+
+	// wai: wait for interrupt
+	0xCB:	op_noarguments("wai")		// wai
+
+	// wdm: reserved; acts as a two-byte nop
+	0x42:	op_immediate("wdm")		// wdm #nn
+
+	// xba/swa: swap words of a
+	// TODO should I use swa instead...?
+	0xEB:	xba_noarguments			// xba
+
+	// xce: exchange carry and emulation flags
+	0xFB:	xce_noarguments			// xce
+}
+}
