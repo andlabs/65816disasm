@@ -6,14 +6,14 @@ import (
 )
 
 // clc
-func clc_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+func clc_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	env.carryflag.value = 0
 	env.carryflag.known = true
 	return fmt.Sprintf("clc"), pos, false
 }
 
 // sec
-func sec_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+func sec_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	env.carryflag.value = 1
 	env.carryflag.known = true
 	return fmt.Sprintf("sec"), pos, false
@@ -29,13 +29,13 @@ func lda_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
 	} else {
 		if env.m.value == 0 {
 			w, pos := getword(pos)
-			a.value = w
-			a.known = true
+			env.a.value = w
+			env.a.known = true
 			return fmt.Sprintf("lda\t#$%04X", w), pos, false
 		} else {
 			b, pos := getbyte(pos)
-			a.value = uint16(b)
-			a.known = true
+			env.a.value = uint16(b)
+			env.a.known = true
 			return fmt.Sprintf("lda\t#$%02X", b), pos, false
 		}
 	}
@@ -56,13 +56,13 @@ func sep_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
 }
 
 // stp
-func stp_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+func stp_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	return fmt.Sprintf("stp"), pos, true
 }
 
 // xba
 func xba_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
-	low := byte(env.a.vlue & 0xFF)			// whether a is known is irrelevant
+	low := byte(env.a.value & 0xFF)		// whether a is known is irrelevant
 	high := byte((env.a.value >> 8) & 0xFF)
 	env.a.value = (uint16(low) << 8) | uint16(high)
 	return fmt.Sprintf("xba"), pos, false
@@ -70,7 +70,7 @@ func xba_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
 
 // xce
 func xce_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
-	stop = false
+	stop := false
 	if !env.carryflag.known {
 		addcomment(pos - 1, "(!) cannot swap in emulation mode flag because carry flag is not known, meaning we cannot set the m and x flags properly")
 		stop = true

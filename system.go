@@ -25,7 +25,7 @@ type envt struct {
 
 var env *envt
 
-func newenv() *evnt {
+func newenv() *envt {
 	e := new(envt)
 	// TODO verify this
 	e.a.known = false
@@ -142,7 +142,7 @@ func popbyte() (value byte, known bool) {
 	return t.value, t.known
 }
 
-func popword() (value word, known bool) {
+func popword() (value uint16, known bool) {
 	a, ak := popbyte()		// low byte
 	b, bk := popbyte()		// high byte
 	return uint16(a) | (uint16(b) << 8),

@@ -1,10 +1,12 @@
 // 26 may 2013
 package main
 
-var opcodes [256]xyz
+type opcode func(pos uint32) (disassembled string, newpos uint32, done bool)
+
+var opcodes [256]opcode
 
 func init() {
-	opcodes = [256]xyz{
+	opcodes = [256]opcode{
 	// adc: add with carry
 	0x69:	op_immediate("adc"),		// adc #nn
 	0x6D:	op_absolute("adc"),			// adc hhll
@@ -191,7 +193,7 @@ func init() {
 	// lda: load a
 	0xA9:	lda_immediate,			// lda #nn
 	0xAD:	op_absolute("lda"),			// lda hhll
-	0xAF:	op_absoluelong("lda"),		// lda hhllmm
+	0xAF:	op_absolutelong("lda"),		// lda hhllmm
 	0xA5:	op_direct("lda"),			// lda nn
 	0xB2:	op_indirect("lda"),			// lda (nn)
 	0xA7:	op_indirectlong("lda"),		// lda [nn]

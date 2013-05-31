@@ -80,8 +80,8 @@ func jmp_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	logical, pos := getlong(pos)
 	phys, inROM := memmap.Physical(logical)
 	if !inROM {
-		addLongComment(pos - 4, l)
-		return fmt.Sprintf("jmp\t$%04X", w), pos, true
+		addLongComment(pos - 4, logical)
+		return fmt.Sprintf("jmp\t$%06X", logical), pos, true
 	}
 	mklabel(phys, "loc", lpLoc)
 	labelplaces[pos - 4] = phys
@@ -123,8 +123,8 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	logical, pos := getlong(pos)
 	phys, inROM := memmap.Physical(logical)
 	if !inROM {
-		addLongComment(pos - 4, l)
-		return fmt.Sprintf("jmp\t$%04X", w), pos, true
+		addLongComment(pos - 4, logical)
+		return fmt.Sprintf("jmp\t$%06X", logical), pos, true
 	}
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 4] = phys

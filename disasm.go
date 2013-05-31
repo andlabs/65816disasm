@@ -37,7 +37,7 @@ func disassemble(pos uint32) {
 	}
 }
 
-func getbyte(pos uint32) (w byte, newpos uint32) {
+func getbyte(pos uint32) (b byte, newpos uint32) {
 	b = bytes[pos]
 	pos++
 	return b, pos
