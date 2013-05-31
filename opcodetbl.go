@@ -92,7 +92,7 @@ func init() {
 	0x70:	op_branch("bvs")			// bvs addr
 
 	// clc: clear carry flag
-	0x18:	op_noarguments("clc")		// clc
+	0x18:	clc_noarguments			// clc
 
 	// cld: clear decimal flag
 	0xD8:	op_noarguments("cld")		// cld
@@ -344,7 +344,7 @@ func init() {
 	0xF3:	op_indirectstack("sbc")		// sbc (nn,s),y
 
 	// sec: set carry flag
-	0x38:	op_noarguments("sec")		// sec
+	0x38:	sec_noarguments			// sec
 
 	// sed: set decimal flag
 	0xF8:	op_noarguments("sed")		// sed
@@ -454,6 +454,6 @@ func init() {
 	0xEB:	xba_noarguments			// xba
 
 	// xce: exchange carry and emulation flags
-	0xFB:	op_noarguments("xce")		// xce
+	0xFB:	xce_noarguments			// xce
 }
 }

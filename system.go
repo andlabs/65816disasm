@@ -20,6 +20,7 @@ type envt struct {
 	stack	[]knownbyte
 	m		knownbyte	// 16-bit accumulator flag
 	x		knownbyte	// 16-bit index register flag
+	e		knownbyte	// emulation mode flag
 }
 
 var env *envt
@@ -35,6 +36,12 @@ func newenv() *evnt {
 	e.direct.known = true
 	e.dbr.value = 0
 	e.dbr.known = true
+	e.e.value = 1			// start in emulation mode
+	e.e.known = true
+	e.m.value = 1
+	e.m.known = true
+	e.x.value = 1
+	e.x.known = true
 	return e
 }
 
@@ -152,6 +159,7 @@ func saveenv() *envt {
 	copy(e.stack, env.stack)
 	e.m = env.m
 	e.x = env.x
+	e.e = env.e
 	return e
 }
 

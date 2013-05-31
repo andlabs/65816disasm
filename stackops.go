@@ -141,6 +141,7 @@ func pld_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 }
 
 // plp
+// TODO does this alter m and x in emulation mode?
 func plp_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	setp(popbyte())
 	return fmt.Sprintf("plp"), pos, false

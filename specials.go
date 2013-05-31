@@ -5,6 +5,20 @@ import (
 	"fmt"
 )
 
+// clc
+func clc_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+	env.carryflag.value = 0
+	env.carryflag.known = true
+	return fmt.Sprintf("clc"), pos, false
+}
+
+// sec
+func sec_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+	env.carryflag.value = 1
+	env.carryflag.known = true
+	return fmt.Sprintf("sec"), pos, false
+}
+
 // lda #nn
 // TODO (also for pla) - do we save b if m=1?
 func lda_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
@@ -52,4 +66,20 @@ func xba_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
 	high := byte((env.a.value >> 8) & 0xFF)
 	env.a.value = (uint16(low) << 8) | uint16(high)
 	return fmt.Sprintf("xba"), pos, false
+}
+
+// xce
+func xce_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+	stop = false
+	if !env.carryflag.known {
+		addcomment(pos - 1, "(!) cannot swap in emulation mode flag because carry flag is not known, meaning we cannot set the m and x flags properly")
+		stop = true
+	} else {
+		env.carryflag, env.e = env.e, env.carryflag
+		env.x.value = env.e.value
+		env.x.known = true
+		env.m.value = env.e.value
+		env.m.known = true
+	}
+	return fmt.Sprintf("xce"), pos, stop
 }
