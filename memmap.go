@@ -1,8 +1,13 @@
 // 25 may 2013
 package main
 
+import (
+	"fmt"
+)
+
 type MemoryMap interface {
 	Physical(logical uint32) (physical uint32, inROM bool)
+	BankComment(bank byte) (bankComment string)
 }
 
 var memmap MemoryMap
@@ -22,6 +27,21 @@ func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
 	}
 	// TODO convert mirrors to their canonical form?
 	return logical, false		// otherwise take the logical address as it is
+}
+
+func (lowrom) BankComment(bank byte) (bankComment string) {
+	if (bank & 0x7F) <= 0x5F {
+		ROMstart := uint32(bank) * 32768			// banks are 32KB each
+		return fmt.Sprintf("bank $%02X -> ROM $%06X", bank, ROMstart)
+	}
+	if (bank >= 0x70) && (bank <= 0x77) {
+		SRAMstart := uint32(bank) * 32768			// banks are 32KB each
+		return fmt.Sprintf("bank $%02X -> SRAM $%06X", bank, SRAMstart)
+	}
+	if (bank == 0x7E) || (bank == 0x7F) {
+		return fmt.Sprintf("bank $%02X -> RAM", bank)
+	}
+	return fmt.Sprintf("bank $%02X -> reserved", bank)
 }
 
 var LowROM lowrom

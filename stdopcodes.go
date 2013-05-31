@@ -74,8 +74,8 @@ func op_transfer(m string) opcode {
 		makeAUnknown()
 		dest, pos := getbyte(pos)				// binary dest,src; assembler src,dest
 		src, pos := getbyte(pos)
-		addBankComment(pos - 3, src)
-		addBankComment(pos - 3, dest)
+		addBankComment(pos - 3, src, "src")
+		addBankComment(pos - 3, dest, "dest")
 		return fmt.Sprintf("%s\t#$%02X,#$%02X", m, src, dest), pos, false
 	}
 }
