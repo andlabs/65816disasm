@@ -44,4 +44,6 @@ func (lowrom) BankComment(bank byte) (bankComment string) {
 	return fmt.Sprintf("bank $%02X -> reserved", bank)
 }
 
-var LowROM lowrom
+var memmaps = map[string]MemoryMap{
+	"lowrom":		LowROM{},
+}
