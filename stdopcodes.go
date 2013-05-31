@@ -164,8 +164,19 @@ func op_direct(m string) opcode {
 func op_immediate(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
-		b, pos := getbyte(pos)
-		return fmt.Sprintf("%s\t#$%02X", m, b), pos, false
+		stop := true
+		if !env.m.known {
+			addcomment(pos - 1, "(!) cannot disassemble opcode with immediate operand because size unknown")
+			return fmt.Sprintf("%s\t???", m), pos, true
+		} else {
+			if env.m.value != 0 {
+				w, pos := getword(pos)
+				return fmt.Sprintf("%s\t#$%04X", m, w), pos, false
+			} else {
+				b, pos := getbyte(pos)
+				return fmt.Sprintf("%s\t#$%02X", m, b), pos, false
+			}
+		}
 	}
 }
 
@@ -193,5 +204,25 @@ func op_indirectstack(m string) opcode {
 		b, pos := getbyte(pos)
 		addDBRReminderComment(pos - 2)
 		return fmt.Sprintf("%s\t($%02X,s),y", m, b), pos, false
+	}
+}
+
+// xxx #nn
+func op_immediateindex(m string) opcode {
+	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
+		makeAUnknown()
+		stop := true
+		if !env.x.known {
+			addcomment(pos - 1, "(!) cannot disassemble index register opcode with immediate operand because size unknown")
+			return fmt.Sprintf("%s\t???", m), pos, true
+		} else {
+			if env.x.value != 0 {
+				w, pos := getword(pos)
+				return fmt.Sprintf("%s\t#$%04X", m, w), pos, false
+			} else {
+				b, pos := getbyte(pos)
+				return fmt.Sprintf("%s\t#$%02X", m, b), pos, false
+			}
+		}
 	}
 }
