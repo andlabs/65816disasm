@@ -7,22 +7,28 @@ import (
 )
 
 func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
+	origpos := pos - 1
 	b, pos := getbyte(pos)
 	offset := int32(int8(b))
 	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
 	mklabel(bpos, "loc", lpLoc)
-	disassemble(bpos)
+	if bpos != origpos {		// avoid endless recursion on branch to self
+		disassemble(bpos)
+	}
 	return bpos, pos
 }
 
 func dolongbranch(pos uint32) (labelpos uint32, newpos uint32) {
+	origpos := pos - 1
 	w, pos := getword(pos)
 	offset := int32(int16(w))
 	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
 	mklabel(bpos, "loc", lpLoc)
-	disassemble(bpos)
+	if bpos != origpos {		// avoid endless recursion on branch to self
+		disassemble(bpos)
+	}
 	return bpos, pos
 }
 
@@ -55,7 +61,9 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	}
 	mklabel(phys, "loc", lpLoc)
 	labelplaces[pos - 3] = phys
-	disassemble(phys)
+	if phys != (pos - 3) {		// avoid endless recursion on jump to self
+		disassemble(phys)
+	}
 	return fmt.Sprintf("jmp\t%%s"), pos, true
 }
 
@@ -83,7 +91,9 @@ func jmp_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	}
 	mklabel(phys, "loc", lpLoc)
 	labelplaces[pos - 4] = phys
-	disassemble(phys)
+	if phys != (pos - 4) {		// avoid endless recursion on jump to self
+		disassemble(phys)
+	}
 	return fmt.Sprintf("jmp\t%%s"), pos, true
 }
 
@@ -105,7 +115,9 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	}
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 3] = phys
-	disassemble(phys)
+	if phys != (pos - 3) {		// avoid endless recursion on call to self
+		disassemble(phys)
+	}
 	return fmt.Sprintf("jsr\t%%s"), pos, false
 }
 
@@ -126,7 +138,9 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	}
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 4] = phys
-	disassemble(phys)
+	if phys != (pos - 4) {		// avoid endless recursion on call to self
+		disassemble(phys)
+	}
 	return fmt.Sprintf("jsr\t%%s"), pos, true
 }
 
