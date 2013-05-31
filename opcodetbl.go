@@ -83,7 +83,7 @@ func init() {
 	0x00:	op_noarguments("brk")		// brk
 
 	// brl: branch to 16-bit offset
-	0x82:	brl_branch				// brl addr
+	0x82:	brl_pcrelativeword			// brl addr
 
 	// bvc: branch on overflow clear
 	0x50:	op_branch("bvc")			// bvc addr
