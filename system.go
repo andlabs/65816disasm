@@ -25,6 +25,7 @@ type envt struct {
 	m		knownbyte	// 16-bit accumulator flag
 	x		knownbyte	// 16-bit index register flag
 	e		knownbyte	// emulation mode flag
+	pbr		byte			// must always be known
 }
 
 var env *envt
@@ -46,6 +47,7 @@ func newenv() *envt {
 	e.m.known = true
 	e.x.value = 1
 	e.x.known = true
+	e.pbr = 0
 	return e
 }
 
@@ -164,6 +166,7 @@ func saveenv() *envt {
 	e.m = env.m
 	e.x = env.x
 	e.e = env.e
+	e.pbr = env.pbr
 	return e
 }
 

@@ -53,7 +53,7 @@ func brl_pcrelativeword(pos uint32) (disassembled string, newpos uint32, done bo
 // TODO this (all of these, actually, including jsr_absolute) does (do) not account for crossing banks
 func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
-	logical := (pos & 0xFF0000) | uint32(w)
+	logical := (uint32(env.pbr) << 16) | uint32(w)
 	phys, inROM := memmap.Physical(logical)
 	if !inROM {
 		addPBRComment(pos - 3, pos, w)
@@ -92,7 +92,10 @@ func jmp_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	mklabel(phys, "loc", lpLoc)
 	labelplaces[pos - 4] = phys
 	if phys != (pos - 4) {		// avoid endless recursion on jump to self
+		oldpbr := env.pbr
+		env.pbr = byte((logical >> 16) & 0xFF)
 		disassemble(phys)
+		env.pbr = oldpbr
 	}
 	return fmt.Sprintf("jmp\t%%s"), pos, true
 }
@@ -107,7 +110,7 @@ func jmp_absolutelongindirect(pos uint32) (disassembled string, newpos uint32, d
 // jsr hhll
 func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
-	logical := (pos & 0xFF0000) | uint32(w)
+	logical := (uint32(env.pbr) << 16) | uint32(w)
 	phys, inROM := memmap.Physical(logical)
 	if !inROM {
 		addPBRComment(pos - 3, pos, w)
@@ -139,7 +142,10 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 4] = phys
 	if phys != (pos - 4) {		// avoid endless recursion on call to self
+		oldpbr := env.pbr
+		env.pbr = byte((logical >> 16) & 0xFF)
 		disassemble(phys)
+		env.pbr = oldpbr
 	}
 	return fmt.Sprintf("jsr\t%%s"), pos, false
 }

@@ -114,6 +114,7 @@ func main() {
 			labels[pos] = label
 		}
 		labelpriorities[pos] = lpSub
+		env.pbr = 0			// we execute from bank 0
 		disassemble(pos)
 	}
 
