@@ -79,6 +79,36 @@ func setp(p byte, known bool) {
 	env.x.known = known
 }
 
+func clearpbits(p byte) {
+	if (p & carryflagbit) != 0 {
+		env.carryflag.value = 0
+		env.carryflag.known = true
+	}
+	if (p & mflagbit) != 0 {
+		env.m.value = 0
+		env.m.known = true
+	}
+	if (p & xflagbit) != 0 {
+		env.x.value = 0
+		env.x.known = true
+	}
+}
+
+func setpbits(p byte) {
+	if (p & carryflagbit) != 0 {
+		env.carryflag.value = 1
+		env.carryflag.known = true
+	}
+	if (p & mflagbit) != 0 {
+		env.m.value = 1
+		env.m.known = true
+	}
+	if (p & xflagbit) != 0 {
+		env.x.value = 1
+		env.x.known = true
+	}
+}
+
 func makeAUnknown() {
 	env.a.known = false
 	env.carryflag.known = false

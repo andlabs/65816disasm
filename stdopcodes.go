@@ -169,7 +169,7 @@ func op_immediate(m string) opcode {
 			addcomment(pos - 1, "(!) cannot disassemble opcode with immediate operand because size unknown")
 			return fmt.Sprintf("%s\t???", m), pos, true
 		} else {
-			if env.m.value != 0 {
+			if env.m.value == 0 {
 				w, pos := getword(pos)
 				return fmt.Sprintf("%s\t#$%04X", m, w), pos, false
 			} else {
@@ -216,7 +216,7 @@ func op_immediateindex(m string) opcode {
 			addcomment(pos - 1, "(!) cannot disassemble index register opcode with immediate operand because size unknown")
 			return fmt.Sprintf("%s\t???", m), pos, true
 		} else {
-			if env.x.value != 0 {
+			if env.x.value == 0 {
 				w, pos := getword(pos)
 				return fmt.Sprintf("%s\t#$%04X", m, w), pos, false
 			} else {

@@ -454,6 +454,6 @@ func init() {
 	0xEB:	xba_noarguments			// xba
 
 	// xce: exchange carry and emulation flags
-	0xFB:	xce_noarguments			// xce
+	0xFB:	op_noarguments("xce")		// xce
 }
 }
