@@ -122,7 +122,7 @@ func setpbits(p byte) {
 
 func makeAUnknown() {
 	env.a.known = false
-	env.carryflag.known = false
+//	env.carryflag.known = false
 }
 
 func pushbyte(value byte, known bool) {
