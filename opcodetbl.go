@@ -81,8 +81,7 @@ func init() {
 	0x80:	op_branch("bra"),			// bra addr
 
 	// brk: trigger software interrupt
-	// TODO handle signature byte?
-	0x00:	op_noarguments("brk"),		// brk
+	0x00:	brk_immediate,			// brk #nn
 
 	// brl: branch to 16-bit offset
 	0x82:	brl_pcrelativeword,			// brl addr

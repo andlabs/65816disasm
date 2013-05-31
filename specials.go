@@ -5,6 +5,13 @@ import (
 	"fmt"
 )
 
+// brk #nn
+// TODO invalidate a?
+func brk_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b, pos := getbyte(pos)
+	return fmt.Sprintf("brk\t#$%02X", b), pos, false
+}
+
 // clc
 func clc_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	env.carryflag.value = 0
