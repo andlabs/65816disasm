@@ -23,6 +23,7 @@ const (
 	lpUser
 )
 
+// the map key is a logical address
 var vectorLocs = map[uint32]string{
 	0x00FFFE:	"EmuIRQBRK",
 	0x00FFFC:	"EmuRESET",
@@ -96,8 +97,12 @@ func main() {
 
 	// autoanalyze vectors
 	for addr, label := range vectorLocs {
-		posw, _ := getword(addr)
-		pos, inROM := memmap.Physical(uint32(posw))		// always bank 0
+		pos, inROM := memmap.Physical(addr)				// addr is a logical address
+		if !inROM {
+			errorf("sanity check failure: vector %s ($%06X) not in ROM (memmap.Physical() returned $%06X)", label, addr, pos)
+		}
+		posw, _ := getword(pos)
+		pos, inROM = memmap.Physical(uint32(posw))		// always bank 0
 		if !inROM {
 			fmt.Fprintf(os.Stderr, "physical address for %s vector ($%06X) not in ROM\n", label, uint32(posw))
 			continue
