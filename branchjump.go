@@ -141,7 +141,7 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	if phys != (pos - 4) {		// avoid endless recursion on call to self
 		disassemble(phys)
 	}
-	return fmt.Sprintf("jsr\t%%s"), pos, true
+	return fmt.Sprintf("jsr\t%%s"), pos, false
 }
 
 // rti
