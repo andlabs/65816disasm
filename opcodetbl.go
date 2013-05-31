@@ -126,12 +126,12 @@ func init() {
 	0x02:	op_immediate("cop"),		// cop #nn
 
 	// cpx: compare to x
-	0xE0:	op_immediate("cpx"),		// cpx #nn
+	0xE0:	op_immediateindex("cpx"),	// cpx #nn
 	0xEC:	op_absolute("cpx"),			// cpx hhll
 	0xE4:	op_direct("cpx"),			// cpx nn
 
 	// cpy: compare to y
-	0xC0:	op_immediate("cpy"),		// cpy #nn
+	0xC0:	op_immediateindex("cpy"),	// cpy #nn
 	0xCC:	op_absolute("cpy"),			// cpy hhll
 	0xC4:	op_direct("cpy"),			// cpy nn
 
