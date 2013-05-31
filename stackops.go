@@ -18,7 +18,7 @@ func pei_indirect(pos uint32) (disassembled string, newpos uint32, done bool) {
 	b, pos := getbyte(pos)
 	pushbyte(0, false)				// push dummy
 	addDirectComment(pos - 2, b)
-	return fmt.Sprintf("pea\t$%04X", w), pos, false
+	return fmt.Sprintf("pei\t($%02X)", b), pos, false
 }
 
 // per hhll

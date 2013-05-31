@@ -6,7 +6,7 @@ import (
 )
 
 func addoperandcomment(pos uint32, logical uint32, addr string) {
-	physcal, inROM := memmap.Physical(logical)
+	physical, inROM := memmap.Physical(logical)
 	if inROM {
 		addcomment(pos, "%s $%06X -> ROM $%06X",
 			addr, logical, physical)
@@ -69,7 +69,7 @@ func addDirectLongComment(pos uint32, addr byte) {
 // TODO add a proper addStackComment and addIndirectStackComment instead
 func addDBRReminderComment(pos uint32) {
 	if !env.dbr.known {
-		addcomment(pos, "$%04X - cannot get physical address because dbr is unknown at time of disassembly", addr)
+		addcomment(pos, "cannot get dbr because it is unknown at time of disassembly")
 		return
 	}
 	addcomment(pos, "dbr=$%02X", env.dbr.value)

@@ -2,6 +2,10 @@
 // modified from huc6280disasm
 package main
 
+import (
+	"fmt"
+)
+
 type knownbyte struct {
 	value	byte
 	known	bool
