@@ -251,3 +251,141 @@ func init() {
 	0x17:	op_indirectlongy("ora")		// ora [nn],y
 	0x03:	op_stack("ora")			// ora nn,s
 	0x13:	op_indirectstack("ora")		// ora (nn,s),y
+
+	// pea: push effective address
+	0xF4:	pea_absolute				// pea hhll
+
+	// pei: push effective indirect address
+	0xD4:	pei_indirect				// pei (nn)
+
+	// per: push effective pc-relative address
+	0x62:	per_pcrelativeword			// per hhll
+
+	// pha: push a
+	0x48:	pha_noarguments			// pha
+
+	// phb: push dbr
+	0x8B:	phb_noarguments			// phb
+
+	// phd: push d
+	0x0B:	phd_noarguments			// phd
+
+	// phk: push pbr
+	0x4B:	phk_noarguments			// phk
+
+	// php: push p
+	0x08:	php_noarguments			// php
+
+	// phx: push x
+	0xDA:	phx_noarguments			// phx
+
+	// phy: push y
+	0x5A:	phy_noarguments			// phy
+
+	// pla: pop a
+	0x68:	pla_noarguments			// pla
+
+	// plb: pop dbr
+	0xAB:	plb_noarguments			// plb
+
+	// pld: pop d
+	0x2B:	pld_noarguments			// pld
+
+	// plp: pop p
+	0x28:	plp_noarguments			// plp
+
+	// plx: pop x
+	0xFA:	plx_noarguments			// plx
+
+	// ply: pop y
+	0x7A:	ply_noarguments			// ply
+
+	// rep: clear bits in p
+	0xC2:	rep_immediate				// rep #nn
+
+	// rol: rotate left
+	0x2A:	op_accumulator("rol")		// rol a
+	0x2E:	op_absolute("rol")			// rol hhll
+	0x26:	op_direct("rol")			// rol nn
+	0x3E:	op_absolutex("rol")			// rol hhll,x
+	0x36:	op_directx("rol")			// rol nn,x
+
+	// ror: rotate right
+	0x6A:	op_accumulator("ror")		// ror a
+	0x6E:	op_absolute("ror")			// ror hhll
+	0x66:	op_direct("ror")			// ror nn
+	0x7E:	op_absolutex("ror")			// ror hhll,x
+	0x76:	op_directx("ror")			// ror nn,x
+
+	// rti: return from interrupt
+	0x40:	rti_noarguments			// rti
+
+	// rtl: return from subroutine, popping long address
+	0x6B:	rtl_noarguments			// rtl
+
+	// rts: return from subroutine
+	0x60:	rts_noarguments			// rts
+
+	// sbc: subtract with carry
+	0xE9:	op_immediate("sbc")		// sbc #nn
+	0xED:	op_absolute("sbc")			// sbc hhll
+	0xEF:	op_absolutelong("sbc")		// sbc hhllmm
+	0xE5:	op_direct("sbc")			// sbc nn
+	0xF2:	op_indirect("sbc")			// sbc (nn)
+	0xE7:	op_indirectlong("sbc")		// sbc [nn]
+	0xFD:	op_absolutex("sbc")			// sbc hhll,x
+	0xFF:	op_absolutelongx("sbc")		// sbc hhllmm,x
+	0xF9:	op_absolutey("sbc")			// sbc hhll,y
+	0xF5:	op_directx("sbc")			// sbc nn,x
+	0xE1:	op_indirectx("sbc")			// sbc (nn,x)
+	0xF1:	op_indirecty("sbc")			// sbc (nn),y
+	0xF7:	op_indirectlongy("sbc")		// sbc [nn],y
+	0xE3:	op_stack("sbc")			// sbc nn,s
+	0xF3:	op_indirectstack("sbc")		// sbc (nn,s),y
+
+	// sec: set carry flag
+	0x38:	op_noarguments("sec")		// sec
+
+	// sed: set decimal flag
+	0xF8:	op_noarguments("sed")		// sed
+
+	// sei: disable interrupts
+	0x78:	op_noarguments("sei")		// sei
+
+	// sep: set bits in p
+	0xE2:	sep_immediate				// sep #nn
+
+	// sta: store a
+	0x8D:	op_absolute("sta")			// sta hhll
+	0x8F:	op_absolutelong("sta")		// sta hhllmm
+	0x85:	op_direct("sta")			// sta nn
+	0x92:	op_indirect("sta")			// sta (nn)
+	0x87:	op_indirectlong("sta")		// sta [nn]
+	0x9D:	op_absolutex("sta")			// sta hhll,x
+	0x9F:	op_absolutelongx("sta")		// sta hhllmm,x
+	0x99:	op_absolutey("sta")			// sta hhll,y
+	0x95:	op_directx("sta")			// sta nn,x
+	0x81:	op_indirectx("sta")			// sta (nn,x)
+	0x91:	op_indirecty("sta")			// sta (nn),y
+	0x97:	op_indirectlongy("sta")		// sta [nn],y
+	0x83:	op_stack("sta")				// sta nn,s
+	0x93:	op_indirectstack("sta")		// sta (nn,s),y
+
+	// stp: end execution and wait for a hardware reset
+	0xDB:	stp_noarguments			// stp
+
+	// stx: store x
+	0x8E:	op_absolute("stx")			// stx hhll
+	0x86:	op_direct("stx")			// stx nn
+	0x96:	op_directy("stx")			// stx nn,y
+
+	// sty: store y
+	0x8C:	op_absolute("sty")			// sty hhll
+	0x84:	op_direct("sty")			// sty nn
+	0x94:	op_directx("sty")			// sty nn,x
+
+	// stz: store zero
+	0x9C:	op_absolute("stz")			// stz hhll
+	0x64:	op_direct("stz")			// stz nn
+	0x9E:	op_absolutex("stz")			// stz hhll,x
+	0x74:	op_directx("stz")			// stz nn,x
