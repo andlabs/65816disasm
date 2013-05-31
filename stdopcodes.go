@@ -164,7 +164,6 @@ func op_direct(m string) opcode {
 func op_immediate(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
-		stop := true
 		if !env.m.known {
 			addcomment(pos - 1, "(!) cannot disassemble opcode with immediate operand because size unknown")
 			return fmt.Sprintf("%s\t???", m), pos, true
@@ -211,7 +210,6 @@ func op_indirectstack(m string) opcode {
 func op_immediateindex(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
-		stop := true
 		if !env.x.known {
 			addcomment(pos - 1, "(!) cannot disassemble index register opcode with immediate operand because size unknown")
 			return fmt.Sprintf("%s\t???", m), pos, true

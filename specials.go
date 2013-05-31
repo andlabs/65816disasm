@@ -22,7 +22,6 @@ func sec_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 // lda #nn
 // TODO (also for pla) - do we save b if m=1?
 func lda_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
-	stop := true
 	if !env.m.known {
 		addcomment(pos - 1, "(!) cannot disassemble lda with immediate operand because size unknown")
 		return fmt.Sprintf("lda\t???"), pos, true
