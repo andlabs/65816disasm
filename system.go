@@ -128,7 +128,7 @@ func pushbyte(value byte, known bool) {
 	})
 }
 
-func pushword(value uint16, known bool {
+func pushword(value uint16, known bool) {
 	pushbyte(byte((value >> 8) & 0xFF), known)
 	pushbyte(byte(value & 0xFF), known)
 }

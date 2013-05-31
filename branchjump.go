@@ -4,7 +4,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
