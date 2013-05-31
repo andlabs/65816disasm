@@ -74,3 +74,10 @@ func addDBRReminderComment(pos uint32) {
 	}
 	addcomment(pos, "dbr=$%02X", env.dbr.value)
 }
+
+// hhll and the like, but for jumps
+// TODO since pbr can't cross banks in these jumps, do I really need xpos separate?
+func addPBRComment(pos uint32, xpos uint32, addr uint16) {
+	logical := (xpos & 0xFF0000) | uint32(addr)
+	addoperandcomment(pos, logical, fmt.Sprintf("$%04X ->", addr))
+}
