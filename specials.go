@@ -59,6 +59,12 @@ func stp_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 	return fmt.Sprintf("stp"), pos, true
 }
 
+// wdm #nn
+func wdm_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+	b, pos := getbyte(pos)
+	return fmt.Sprintf("wdm\t#$%02X", b), pos, false
+}
+
 // xba
 func xba_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	low := byte(env.a.value & 0xFF)		// whether a is known is irrelevant

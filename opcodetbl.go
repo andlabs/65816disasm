@@ -449,7 +449,7 @@ func init() {
 	0xCB:	op_noarguments("wai"),		// wai
 
 	// wdm: reserved; acts as a two-byte nop
-	0x42:	op_immediate("wdm"),		// wdm #nn
+	0x42:	wdm_immediate,			// wdm #nn
 
 	// xba/swa: swap words of a
 	// TODO should I use swa instead...?
