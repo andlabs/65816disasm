@@ -36,12 +36,10 @@ func op_branch(m string) opcode {
 }
 
 // brl label
-func brl_pcrelativeword(m string) opcode {
-	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
-		labelpos, pos := dolongbranch(pos)
-		labelplaces[pos - 3] = labelpos
-		return fmt.Sprintf("%s\t%%s", m), pos, false
-	}
+func brl_pcrelativeword(pos uint32) (disassembled string, newpos uint32, done bool) {
+	labelpos, pos := dolongbranch(pos)
+	labelplaces[pos - 3] = labelpos
+	return fmt.Sprintf("brl\t%%s"), pos, false
 }
 
 // jmp hhll

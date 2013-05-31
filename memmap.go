@@ -12,6 +12,7 @@ type MemoryMap interface {
 
 var memmap MemoryMap
 
+// TODO LowROM or LoROM?
 type lowrom struct{}
 
 func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
@@ -45,5 +46,5 @@ func (lowrom) BankComment(bank byte) (bankComment string) {
 }
 
 var memmaps = map[string]MemoryMap{
-	"lowrom":		LowROM{},
+	"lowrom":		lowrom{},
 }

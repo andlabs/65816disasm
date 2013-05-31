@@ -69,6 +69,7 @@ func main() {
 
 	filename := flag.Arg(0)
 
+	// TODO make case-insensitive?
 	wantedmap := flag.Arg(1)
 	if _, ok := memmaps[wantedmap]; !ok {
 		fmt.Fprintf(os.Stderr, "unsupported memory map %q\n", wantedmap)
@@ -96,9 +97,10 @@ func main() {
 	// autoanalyze vectors
 	for addr, label := range vectorLocs {
 		posw, _ := getword(addr)
-		pos, err := physical(posw)
-		if err != nil {
-			errorf("internal error: could not get physical address for %s vector (meaning something is up with the paging or the game actually does have the vector outside page 7): %v\n", label, err)
+		pos, inROM := memmap.Physical(uint32(posw))		// always bank 0
+		if !inROM {
+			fmt.Fprintf(os.Stderr, "physical address for %s vector ($%06X) not in ROM\n", label, uint32(posw))
+			continue
 		}
 		if labels[pos] != "" {		// if already defined as a different vector, concatenate the labels to make sure everything is represented
 			// TODO because this uses a map, it will not be in vector order

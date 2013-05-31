@@ -78,7 +78,7 @@ func getp() (p byte, err error) {
 	if env.x.value != 0 {
 		p |= xflagbit
 	}
-	return p
+	return p, nil
 }
 
 func setp(p byte, known bool) {
@@ -142,7 +142,7 @@ func popbyte() (value byte, known bool) {
 		return 0, false	// TODO correct?
 	}
 	t := env.stack[len(env.stack) - 1]
-	stack = env.stack[:len(env.stack) - 1]
+	env.stack = env.stack[:len(env.stack) - 1]
 	return t.value, t.known
 }
 

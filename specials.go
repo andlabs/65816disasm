@@ -61,7 +61,7 @@ func stp_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 }
 
 // xba
-func xba_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+func xba_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	low := byte(env.a.value & 0xFF)		// whether a is known is irrelevant
 	high := byte((env.a.value >> 8) & 0xFF)
 	env.a.value = (uint16(low) << 8) | uint16(high)
@@ -69,7 +69,7 @@ func xba_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
 }
 
 // xce
-func xce_immediate(pos uint32) (disassembled string, newpos uint32, done bool) {
+func xce_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
 	if !env.carryflag.known {
 		addcomment(pos - 1, "(!) cannot swap in emulation mode flag because carry flag is not known, meaning we cannot set the m and x flags properly")
