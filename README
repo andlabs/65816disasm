@@ -1,0 +1,48 @@
+65816disasm is a disassembler for WDC 65816 code. It tries to analyze code flow, much like IDA does. It uses a little language to control how the disassembler works. Right now it only has support for LowROM SNES ROMs, but that can easily be changed in the future (see memmap.go). It is far from perfect, but good enough for code analysis.
+
+Usage:
+	65816disasm [options] ROMfile memmap
+if you do not specify the correct command line, you will get the full help (including valid values of memmap).
+
+The language is read from standard input. Diagnostic messages are printed on standard error. The final disassembly is printed on standard output.
+
+There is only one option right now, -isolatesubs. If, during analysis, the disassembly gives up in lots of places due to not knowing how big index register immediate operations are (it can't know for sure what the value of the x flag is), try this option.
+
+The language is simple: each line of the input is split around Unicode whitespace into tokens. Any token that begins with a # is a comment; comments stretch to the end of a line. The script ends at end of file, at which point the disassembler will spit out the result. Right now it only spits out actual instructions and special subroutine data, not printing any other data bytes. The currently supported language commands are
+	help
+		show a quick summary of commands
+	doauto
+		do auto-analysis on the ROM vectors
+	specialsub addr command [args]
+		mark a subroutine as doing something special with the instruction stream
+		addr must be a bare (not prefixed) hex number; this will change soon I hope
+		commands are:
+			stringafter n
+				the given subroutine takes n bytes from the instruction stream, then a null-terminated string; example:
+					after specialsub 12345 stringafter 2, you see
+						jsr sub_12345
+						dc.b 3
+						dc.b 6
+						dc.b "hello", 0
+Other commands will be added in time.
+
+The format of output lines is
+	instruction	operand	; ROM address of instruction | logical address of operands, or other info about the operands
+There can be multiple of the above, separated by pipes. If you see a (!) in this field, then something went wrong; see the message.
+
+65816disasm tries not to make a mistake. For example, because WDC encoded the size of immediate addressing mode opcodes in the status register p, the disassembler will give up if the respective bits of p become indeterminate. 65816disasm tries to follow the stack and the value of the a register properly as well, but static analysis like this can only go so far, and there may very well still be bugs. Feel free to suggest improvements.
+
+So far I have only tested this on the Japanese version of Thunder Spirits.
+
+This package is go get-table, and does not rely on any external libraries.
+
+Some files will say they are based on an equivalent file in huc6280disasm, an earlier disassembler I wrote. Though it works, at the time of writing it is slightly less complete than this, and I have yet to release that. That disassembler in turn has files based on files of tms34010disasm, an even earlier disassembler that (at the time of writing this) is still in its infancy. Both will be released in time.
+
+Please feel free to file bug reports and make suggestions.
+
+Thanks to:
+- devin and BMF54123 from The Cutting Room Floor for general help
+- ]SiMKiN[ for his SNES memory mapping document (http://www.romhacking.net/documents/173/)
+- WDC for their 65816 datasheet and assembler programmer's manual, the primary references used to make the actual disassembler portion of the program
+- http://oxyron.de/html/opcodes816.html for when the above had errors
+- anyone who I may have forgotten
