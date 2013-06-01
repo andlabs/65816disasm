@@ -119,6 +119,9 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 3] = phys
 	if phys != (pos - 3) {		// avoid endless recursion on call to self
+		if *isolateSubs {
+			defer restoreenv(saveenv())
+		}
 		disassemble(phys)
 	}
 	return fmt.Sprintf("jsr\t%%s"), pos, false
@@ -142,10 +145,15 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 4] = phys
 	if phys != (pos - 4) {		// avoid endless recursion on call to self
-		oldpbr := env.pbr
+		if *isolateSubs {		// isolate before loading the new pbr
+			defer restoreenv(saveenv())
+		}
+		oldpbr := env.pbr	// if we aren't isolating, we need to manually restore the old pbr
 		env.pbr = byte((logical >> 16) & 0xFF)
 		disassemble(phys)
-		env.pbr = oldpbr
+		if !*isolateSubs {
+			env.pbr = oldpbr
+		}
 	}
 	return fmt.Sprintf("jsr\t%%s"), pos, false
 }

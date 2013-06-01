@@ -48,8 +48,13 @@ func errorf(format string, args ...interface{}) {
 	os.Exit(1)
 }
 
+// command-line options
+var (
+	isolateSubs = flag.Bool("isolatesubs", false, "isolate subroutines in their own environment")
+)
+
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: %s ROM mode\n", os.Args[0])
+	fmt.Fprintf(os.Stderr, "usage: %s [options] ROM mode\n", os.Args[0])
 	fmt.Fprintf(os.Stderr, "mode must be one of:")
 	for m := range memmaps {
 		fmt.Fprintf(os.Stderr, " %s", m)
