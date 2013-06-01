@@ -38,8 +38,6 @@ So far I have only tested this on:
 
 This package is go get-table, and does not rely on any external libraries.
 
-Some files will say they are based on an equivalent file in huc6280disasm, an earlier disassembler I wrote. Though it works, at the time of writing it is slightly less complete than this, and I have yet to release that. That disassembler in turn has files based on files of tms34010disasm, an even earlier disassembler that (at the time of writing this) is still in its infancy. Both will be released in time.
-
 The program is released under the terms of the GPLv3 for now. I may make the license more relaxed in the future.
 
 Please feel free to file bug reports and make suggestions.
