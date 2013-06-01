@@ -1,4 +1,4 @@
-65816disasm is a disassembler for WDC 65816 code. It tries to analyze code flow, much like IDA does. It uses a little language to control how the disassembler works. Right now it only has support for LowROM SNES ROMs, but that can easily be changed in the future (see memmap.go). It is far from perfect, but good enough for code analysis.
+65816disasm is a disassembler for WDC 65816 code. It tries to analyze code flow, much like IDA does. It uses a little language to control how the disassembler works. Right now it only has support for LowROM and HighROM SNES ROMs, but that can easily be changed in the future (see memmap.go). It is far from perfect, but good enough for code analysis.
 
 Usage:
 	65816disasm [options] ROMfile memmap

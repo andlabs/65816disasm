@@ -1,5 +1,5 @@
 # 1 june 2013
-# use -isolatesubs on this
+# use -isolatesubs and lowrom on this
 
 # PrintString
 specialsub 2891F stringafter 3
