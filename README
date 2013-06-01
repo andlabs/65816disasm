@@ -50,3 +50,6 @@ Thanks to:
 - WDC for their 65816 datasheet and assembler programmer's manual, the primary references used to make the actual disassembler portion of the program
 - http://oxyron.de/html/opcodes816.html for when the above had errors
 - anyone who I may have forgotten
+
+TODOs
+- looks like I'll need to follow x for Columns to work properly; it loads the d register from there
