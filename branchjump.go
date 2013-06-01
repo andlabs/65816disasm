@@ -124,6 +124,9 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 		}
 		disassemble(phys)
 	}
+	if f, ok := specialsubs[phys]; ok {		// handle special subroutine action
+		pos = f(pos)
+	}
 	return fmt.Sprintf("jsr\t%%s"), pos, false
 }
 
@@ -154,6 +157,9 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 		if !*isolateSubs {
 			env.pbr = oldpbr
 		}
+	}
+	if f, ok := specialsubs[phys]; ok {		// handle special subroutine action
+		pos = f(pos)
 	}
 	return fmt.Sprintf("jsr\t%%s"), pos, false
 }

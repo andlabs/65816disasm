@@ -28,7 +28,10 @@ func disassemble(pos uint32) {
 		s, newpos, done := op(pos + 1)
 		instructions[pos] = s
 		for i := pos + 1; i < newpos; i++ {
-			instructions[i] = operandString
+			// if a specialsub function put something here already, we don't overwrite it
+			if _, ok := instructions[i]; !ok {
+				instructions[i] = operandString
+			}
 		}
 		if done {
 			break

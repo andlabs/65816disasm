@@ -17,6 +17,7 @@ var commands = []struct {
 }{
 	{ "help", "show this help", c_help },
 	{ "doauto", "auto-analyze vectors", c_doauto },		// TODO keep "vectors"?
+	{ "specialsub", "mark a subroutine as doing something special", c_specialsub },
 }
 
 // the map key is a logical address
