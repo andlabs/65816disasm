@@ -20,6 +20,7 @@ func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
 	base := uint16(logical & 0xFFFF)
 	if (bank & 0x7F) <= 0x5F {
 		if (base & 0x8000) == 0x8000 {		// ROM
+			bank &= 0x7F			// handle mirrors properly
 			bank *= 32768			// banks are 32KB each
 			base &= 0x7FFF		// take the offset into the bank
 			bank |= uint32(base)		// add it in
@@ -32,7 +33,7 @@ func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
 
 func (lowrom) BankComment(bank byte) (bankComment string) {
 	if (bank & 0x7F) <= 0x5F {
-		ROMstart := uint32(bank) * 32768			// banks are 32KB each
+		ROMstart := uint32(bank & 0x7F) * 32768		// banks are 32KB each
 		return fmt.Sprintf("bank $%02X -> ROM $%06X", bank, ROMstart)
 	}
 	if (bank >= 0x70) && (bank <= 0x77) {
