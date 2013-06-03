@@ -35,6 +35,7 @@ There can be multiple of the above, separated by pipes. If you see a (!) in this
 So far I have only tested this on:
 	- the Japanese version of Thunder Spirits; a basic disassembly script for the game with instructions is included
 	- Columns (though so far only to make sure HighROM works; will do an analysis later)
+	- Jaki Crush (I was curious; with it I found a bug in LowROM handling)
 
 This package is go get-table, and does not rely on any external libraries.
 
