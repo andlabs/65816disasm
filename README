@@ -10,7 +10,7 @@ The options are:
 	-isolatesubs
 		If, during analysis, the disassembly gives up in lots of places due to not knowing how big index register immediate operations are (it can't know for sure what the value of the x flag is), try this option.
 	-showall
-		Show all bytes in the ouptut disassembly, including bytes that were not disassembled. This will significantly increase the size of the disassembly (think on the order of hundreds of megabytes); beware! Each data byte line will have a comment that shows what the word and long at that address is as well as the ASCII character of that byte (if printable); this presently does not properly handle crossing banks.
+		Show all bytes in the ouptut disassembly, including bytes that were not disassembled. This will significantly increase the size of the disassembly (think on the order of hundreds of megabytes); beware! Each data byte line will have a comment that shows what the word and (24-bit) long at that address is as well as the ASCII character of that byte (if printable); this presently does not properly handle crossing banks.
 
 The language is simple: each line of the input is split around Unicode whitespace into tokens. Any token that begins with a # is a comment; comments stretch to the end of a line. The script ends at end of file, at which point the disassembler will spit out the result. Right now it only spits out actual instructions and special subroutine data, not printing any other data bytes. The currently supported language commands are
 	help
