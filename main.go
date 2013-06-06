@@ -67,12 +67,12 @@ func main() {
 	if err != nil {
 		errorf("error reading input file %s: %v", filename, err)
 	}
-	if len(bytes) < 0x2000 {
+/*	if len(bytes) < 0x2000 {
 		errorf("given input file %s does not provide a complete interrupt vector table (this restriction may be lifted in the future)", filename)
 	}
 	if len(bytes) >= 0x1F0000 {
 		errorf("given input file %s too large (this restriction may be lifted in the future)", filename)
-	}
+	}*/
 
 	instructions = map[uint32]string{}
 	labels = map[uint32]string{}
