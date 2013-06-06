@@ -24,6 +24,32 @@ func print() {
 				fmt.Printf(" | %s", comment)
 			}
 			fmt.Println()
+		} else if !ok && *showAll {
+			has := false
+			fmt.Printf("\tdc.b\t$%02X\t\t; $%X", bytes[i], i)
+			if i + 1 < lbu32 {
+				fmt.Printf(" | w")
+				has = true
+				if i + 2 < lbu32 {
+					fmt.Printf("/l $(%02X)",
+						bytes[i + 2])
+				} else {
+					fmt.Printf(" $")
+				}
+				fmt.Printf("%02X%02X",
+					bytes[i + 1], bytes[i])
+			}
+			if bytes[i] >= 0x20 && bytes[i] < 0x7F {		// ASCII
+				if !has {
+					fmt.Printf(" |")
+					has = true
+				}
+				fmt.Printf(" '%c'", bytes[i])
+			}
+			if comment, ok := comments[i]; ok {
+				fmt.Printf(" | %s", comment)
+			}
+			fmt.Println()
 		}
 	}
 }

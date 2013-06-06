@@ -6,7 +6,11 @@ if you do not specify the correct command line, you will get the full help (incl
 
 The language is read from standard input. Diagnostic messages are printed on standard error. The final disassembly is printed on standard output.
 
-There is only one option right now, -isolatesubs. If, during analysis, the disassembly gives up in lots of places due to not knowing how big index register immediate operations are (it can't know for sure what the value of the x flag is), try this option.
+The options are:
+	-isolatesubs
+		If, during analysis, the disassembly gives up in lots of places due to not knowing how big index register immediate operations are (it can't know for sure what the value of the x flag is), try this option.
+	-showall
+		Show all bytes in the ouptut disassembly, including bytes that were not disassembled. This will significantly increase the size of the disassembly (think on the order of hundreds of megabytes); beware! Each data byte line will have a comment that shows what the word and long at that address is as well as the ASCII character of that byte (if printable); this presently does not properly handle crossing banks.
 
 The language is simple: each line of the input is split around Unicode whitespace into tokens. Any token that begins with a # is a comment; comments stretch to the end of a line. The script ends at end of file, at which point the disassembler will spit out the result. Right now it only spits out actual instructions and special subroutine data, not printing any other data bytes. The currently supported language commands are
 	help
@@ -36,6 +40,7 @@ So far I have only tested this on:
 	- the Japanese version of Thunder Spirits; a basic disassembly script for the game with instructions is included
 	- Columns (though so far only to make sure HighROM works; will do an analysis later)
 	- Jaki Crush (I was curious; with it I found a bug in LowROM handling)
+	- WeaponLord
 
 This package is go get-table, and does not rely on any external libraries.
 

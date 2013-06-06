@@ -31,6 +31,7 @@ func errorf(format string, args ...interface{}) {
 // command-line options
 var (
 	isolateSubs = flag.Bool("isolatesubs", false, "isolate subroutines in their own environment")
+	showAll = flag.Bool("showall", false, "show nondisassembled data in output")
 )
 
 func usage() {
