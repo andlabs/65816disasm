@@ -67,6 +67,7 @@ func main() {
 	if err != nil {
 		errorf("error reading input file %s: %v", filename, err)
 	}
+	// TODO figure out what these should be, if they should be
 /*	if len(bytes) < 0x2000 {
 		errorf("given input file %s does not provide a complete interrupt vector table (this restriction may be lifted in the future)", filename)
 	}
