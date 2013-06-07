@@ -1,0 +1,22 @@
+# 6 june 2013
+# -isolatesubs hirom
+
+doauto
+
+# jump table with jump at $293F90
+dowordptr 293F93 29
+dowordptr 293F95 29
+dowordptr 293F97 29
+dowordptr 293F99 29
+dowordptr 293F9B 29
+dowordptr 293F9D 29
+dowordptr 293F9F 29
+
+# jump table with jump at $294A00
+dowordptr 294A03 29
+dowordptr 294A05 29
+dowordptr 294A07 29
+dowordptr 294A09 29
+dowordptr 294A0B 29
+dowordptr 294A0D 29
+dowordptr 294A0F 29
