@@ -4,19 +4,20 @@
 doauto
 
 # jump table with jump at $293F90
-dowordptr 293F93 29
-dowordptr 293F95 29
-dowordptr 293F97 29
-dowordptr 293F99 29
-dowordptr 293F9B 29
-dowordptr 293F9D 29
-dowordptr 293F9F 29
+# TODO instead of having pbr here, have the jump instruction address, to restore the whole state?
+dowordptr 293F93 E9
+dowordptr 293F95 E9
+dowordptr 293F97 E9
+dowordptr 293F99 E9
+dowordptr 293F9B E9
+dowordptr 293F9D E9
+dowordptr 293F9F E9
 
 # jump table with jump at $294A00
-dowordptr 294A03 29
-dowordptr 294A05 29
-dowordptr 294A07 29
-dowordptr 294A09 29
-dowordptr 294A0B 29
-dowordptr 294A0D 29
-dowordptr 294A0F 29
+dowordptr 294A03 E9
+dowordptr 294A05 E9
+dowordptr 294A07 E9
+dowordptr 294A09 E9
+dowordptr 294A0B E9
+dowordptr 294A0D E9
+dowordptr 294A0F E9

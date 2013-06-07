@@ -80,4 +80,6 @@ func addDBRReminderComment(pos uint32) {
 func addPBRComment(pos uint32, xpos uint32, addr uint16) {
 	logical := (xpos & 0xFF0000) | uint32(addr)
 	addoperandcomment(pos, logical, fmt.Sprintf("$%04X ->", addr))
+	// TODO combine into one comment?
+	addcomment(pos, "pbr = $%02X", env.pbr)
 }
