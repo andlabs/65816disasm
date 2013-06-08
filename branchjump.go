@@ -122,10 +122,15 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 3] = phys
 	if phys != (pos - 3) {		// avoid endless recursion on call to self
+		var saved *envt
+
 		if *isolateSubs {
-			defer restoreenv(saveenv())
+			saved = saveenv()
 		}
 		disassemble(phys)
+		if *isolateSubs {
+			restoreenv(saved)
+		}
 	}
 	if f, ok := specialsubs[phys]; ok {		// handle special subroutine action
 		pos = f(pos)
@@ -152,14 +157,17 @@ func jsr_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 	mklabel(phys, "sub", lpSub)
 	labelplaces[pos - 4] = phys
 	if phys != (pos - 4) {		// avoid endless recursion on call to self
+		var saved *envt
+
 		if *isolateSubs {		// isolate before loading the new pbr
-			defer restoreenv(saveenv())
+			saved = saveenv()
 		}
-		oldpbr := env.pbr	// if we aren't isolating, we need to manually restore the old pbr
+		oldpbr := env.pbr
 		env.pbr = byte((logical >> 16) & 0xFF)
 		disassemble(phys)
-		if !*isolateSubs {
-			env.pbr = oldpbr
+		env.pbr = oldpbr
+		if *isolateSubs {
+			restoreenv(saved)
 		}
 	}
 	if f, ok := specialsubs[phys]; ok {		// handle special subroutine action

@@ -70,3 +70,26 @@ dowordptr 2A26C7 2A26B8
 dowordptr 2A26C9 2A26B8
 dowordptr 2A26CB 2A26B8
 dowordptr 2A26CD 2A26B8
+
+# jump table with jump at $2A2762
+dowordptr 2A2765 2A2762
+dowordptr 2A2767 2A2762
+dowordptr 2A2769 2A2762
+dowordptr 2A276B 2A2762
+dowordptr 2A276D 2A2762
+dowordptr 2A276F 2A2762
+dowordptr 2A2771 2A2762
+dowordptr 2A2773 2A2762
+dowordptr 2A2775 2A2762
+dowordptr 2A2777 2A2762
+dowordptr 2A2779 2A2762
+dowordptr 2A277B 2A2762
+dowordptr 2A277D 2A2762
+dowordptr 2A277F 2A2762
+dowordptr 2A2781 2A2762
+dowordptr 2A2783 2A2762
+dowordptr 2A2785 2A2762
+dowordptr 2A2787 2A2762
+dowordptr 2A2789 2A2762
+dowordptr 2A278B 2A2762
+dowordptr 2A278D 2A2762
