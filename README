@@ -29,10 +29,12 @@ The language is simple: each line of the input is split around Unicode whitespac
 						dc.b 6
 						dc.b "hello", 0
 Other commands will be added in time.
+	dowordptr addr envaddr
+		Makes the word at addr a pointer to code whose environment (and thus pbr) come from the environment at envaddr. Presently, the environment is only saved this way at indirect jump instructions (jmp (hhll), jmp (hhll,x), jmp [hhllmm], and jsr (hhll,x)).
 
 The format of output lines is
 	instruction	operand	; ROM address of instruction | logical address of operands, or other info about the operands
-There can be multiple of the above, separated by pipes. If you see a (!) in this field, then something went wrong; see the message.
+There can be multiple of the above, separated by pipes. If you see a (!) in this field, then something went wrong; see the message. See the WeaponLord US disassembly script for examples.
 
 65816disasm tries not to make a mistake. For example, because WDC encoded the size of immediate addressing mode opcodes in the status register p, the disassembler will give up if the respective bits of p become indeterminate. 65816disasm tries to follow the stack and the value of the a register properly as well, but static analysis like this can only go so far, and there may very well still be bugs. Feel free to suggest improvements.
 

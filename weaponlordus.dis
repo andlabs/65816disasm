@@ -4,20 +4,55 @@
 doauto
 
 # jump table with jump at $293F90
-# TODO instead of having pbr here, have the jump instruction address, to restore the whole state?
-dowordptr 293F93 E9
-dowordptr 293F95 E9
-dowordptr 293F97 E9
-dowordptr 293F99 E9
-dowordptr 293F9B E9
-dowordptr 293F9D E9
-dowordptr 293F9F E9
+dowordptr 293F93 293F90
+dowordptr 293F95 293F90
+dowordptr 293F97 293F90
+dowordptr 293F99 293F90
+dowordptr 293F9B 293F90
+dowordptr 293F9D 293F90
+dowordptr 293F9F 293F90
 
 # jump table with jump at $294A00
-dowordptr 294A03 E9
-dowordptr 294A05 E9
-dowordptr 294A07 E9
-dowordptr 294A09 E9
-dowordptr 294A0B E9
-dowordptr 294A0D E9
-dowordptr 294A0F E9
+dowordptr 294A03 294A00
+dowordptr 294A05 294A00
+dowordptr 294A07 294A00
+dowordptr 294A09 294A00
+dowordptr 294A0B 294A00
+dowordptr 294A0D 294A00
+dowordptr 294A0F 294A00
+
+# jump table with jump at $2A2241
+dowordptr 2A22E0 2A2241
+dowordptr 2A22E2 2A2241
+dowordptr 2A22E4 2A2241
+dowordptr 2A22E6 2A2241
+dowordptr 2A22E8 2A2241
+dowordptr 2A22EA 2A2241
+dowordptr 2A22EC 2A2241
+dowordptr 2A22EE 2A2241
+dowordptr 2A22F0 2A2241
+dowordptr 2A22F2 2A2241
+dowordptr 2A22F4 2A2241
+dowordptr 2A22F6 2A2241
+dowordptr 2A22F8 2A2241
+dowordptr 2A22FA 2A2241
+dowordptr 2A22FC 2A2241
+dowordptr 2A22FE 2A2241
+
+# jump table with jump at 2A2271
+dowordptr 2A2300 2A2271
+dowordptr 2A2302 2A2271
+dowordptr 2A2304 2A2271
+dowordptr 2A2306 2A2271
+dowordptr 2A2308 2A2271
+dowordptr 2A230A 2A2271
+dowordptr 2A230C 2A2271
+dowordptr 2A230E 2A2271
+dowordptr 2A2310 2A2271
+dowordptr 2A2312 2A2271
+dowordptr 2A2314 2A2271
+dowordptr 2A2316 2A2271
+dowordptr 2A2318 2A2271
+dowordptr 2A231A 2A2271
+dowordptr 2A231C 2A2271
+dowordptr 2A231E 2A2271

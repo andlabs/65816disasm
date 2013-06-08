@@ -6,6 +6,7 @@ import (
 	"os"
 	"bufio"
 	"strings"
+	"strconv"
 )
 
 // TODO better name than ui?
@@ -18,6 +19,7 @@ var commands = []struct {
 	{ "help", "show this help", c_help },
 	{ "doauto", "auto-analyze vectors", c_doauto },		// TODO keep "vectors"?
 	{ "specialsub", "mark a subroutine as doing something special", c_specialsub },
+	{ "dowordptr", "mark a word as a pointer to code (with a pre-existing environment)", c_dowordptr },
 }
 
 // the map key is a logical address
@@ -64,6 +66,52 @@ func c_doauto(fields []string) {
 		disassemble(pos)
 	}
 	fmt.Fprintf(os.Stderr, "finished auto-analyzing vectors\n")
+}
+
+func c_dowordptr(fields []string) {
+	if len(fields) != 2 {
+		fmt.Fprintf(os.Stderr, "dowordptr usage: dowordptr word-address env-address\n")
+		return
+	}
+
+	// TODO addr and envaddr must be bare hex numbers with this
+	addr64, err := strconv.ParseUint(fields[0], 16, 32)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "dowordptr error: invalid address hex number %q: %v", fields[0], err)
+		return
+	}
+	addr := uint32(addr64)
+
+	envaddr64, err := strconv.ParseUint(fields[1], 16, 32)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "specialsubs error: invalid environment address hex number %q (for $%06X): %v", fields[1], addr, err)
+		return
+	}
+	envaddr := uint32(envaddr64)
+
+	if addr + 1 > uint32(len(bytes)) {
+		fmt.Fprintf(os.Stderr, "specialsubs error: address $%06X not in ROM\n", addr)
+		return
+	}
+	npbase := (uint16(bytes[addr + 1]) << 8) | uint16(bytes[addr])
+
+	if env, ok := savedenvs[envaddr]; ok {
+		nplogical := (uint32(env.pbr) << 16) | uint32(npbase)
+		npaddr, inROM := memmap.Physical(nplogical)
+		if !inROM {
+			fmt.Fprintf(os.Stderr, "dowordptr error: new address $%06X (from $%06X) not in ROM\n", nplogical, addr)
+			return
+		}
+		mklabel(npaddr, "loc", lpLoc)
+		restoreenv(env)
+		disassemble(npaddr)
+		labelplaces[addr] = npaddr
+		instructions[addr] = "dc.w\t(%s & 0xFFFF)"
+		instructions[addr + 1] = operandString
+	} else {
+		fmt.Fprintf(os.Stderr, "dowordptr error: no environment available for environment $%06X (from $%06X)\n", envaddr, addr)
+		return
+	}
 }
 
 var helptext string
