@@ -39,7 +39,7 @@ dowordptr 2A22FA 2A2241
 dowordptr 2A22FC 2A2241
 dowordptr 2A22FE 2A2241
 
-# jump table with jump at 2A2271
+# jump table with jump at $2A2271
 dowordptr 2A2300 2A2271
 dowordptr 2A2302 2A2271
 dowordptr 2A2304 2A2271
@@ -56,3 +56,17 @@ dowordptr 2A2318 2A2271
 dowordptr 2A231A 2A2271
 dowordptr 2A231C 2A2271
 dowordptr 2A231E 2A2271
+
+# jump table with jump at $2A26B1
+dowordptr 2A26BB 2A26B1
+dowordptr 2A26BD 2A26B1
+dowordptr 2A26BF 2A26B1
+dowordptr 2A26C1 2A26B1
+dowordptr 2A26C3 2A26B1
+
+# jump table with jump at $2A26B8
+dowordptr 2A26C5 2A26B8
+dowordptr 2A26C7 2A26B8
+dowordptr 2A26C9 2A26B8
+dowordptr 2A26CB 2A26B8
+dowordptr 2A26CD 2A26B8
