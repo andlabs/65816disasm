@@ -19,7 +19,7 @@ type knownword struct {
 type envt struct {
 	a		knownword
 	carryflag	knownbyte
-	direct	knownbyte
+	direct	knownword
 	dbr		knownbyte
 	stack	[]knownbyte
 	m		knownbyte	// 16-bit accumulator flag

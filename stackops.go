@@ -54,7 +54,7 @@ func phb_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 
 // phd
 func phd_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
-	pushbyte(env.direct.value, env.direct.known)
+	pushword(env.direct.value, env.direct.known)
 	return fmt.Sprintf("phd"), pos, false
 }
 
@@ -130,7 +130,7 @@ func plb_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 
 // pld
 func pld_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
-	env.direct.value, env.direct.known = popbyte()
+	env.direct.value, env.direct.known = popword()
 	return fmt.Sprintf("pld"), pos, false
 }
 

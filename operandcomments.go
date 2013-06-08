@@ -45,7 +45,7 @@ func addDirectComment(pos uint32, addr byte) {
 	}
 	logical := (uint32(env.direct.value) + uint32(addr)) & 0xFFFF		// keep in bank 0
 	addoperandcomment(pos, logical,
-		fmt.Sprintf("$%02X + d=$%02X ->", addr, env.direct.value))
+		fmt.Sprintf("$%02X + d=$%04X ->", addr, env.direct.value))
 }
 
 // [nn] and the like
@@ -61,7 +61,7 @@ func addDirectLongComment(pos uint32, addr byte) {
 	}
 	logical |= uint32(env.dbr.value) << 16
 	addoperandcomment(pos, logical,
-		fmt.Sprintf("$%02X + d=$%02X + dbr=$%02X ->",
+		fmt.Sprintf("$%02X + d=$%04X + dbr=$%02X ->",
 			addr, env.direct.value, env.dbr.value))
 }
 
