@@ -82,6 +82,7 @@ func main() {
 	labelplaces = map[uint32]uint32{}
 	comments = map[uint32]string{}
 	specialsubs = map[uint32]specialsub{}
+	savedenvs = map[uint32]*envt{}
 
 	doui()
 

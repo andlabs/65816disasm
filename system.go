@@ -173,3 +173,5 @@ func saveenv() *envt {
 func restoreenv(e *envt) {
 	env = e
 }
+
+var savedenvs map[uint32]*envt

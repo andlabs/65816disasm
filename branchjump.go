@@ -71,6 +71,7 @@ func jmp_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 func jmp_absoluteindirect(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
 	addPBRComment(pos - 3, pos, w)
+	savedenvs[pos - 3] = saveenv()
 	return fmt.Sprintf("jmp\t($%04X)", w), pos, true
 }
 
@@ -78,6 +79,7 @@ func jmp_absoluteindirect(pos uint32) (disassembled string, newpos uint32, done 
 func jmp_absoluteindirectx(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
 	addPBRComment(pos - 3, pos, w)
+	savedenvs[pos - 3] = saveenv()
 	return fmt.Sprintf("jmp\t($%04X,x)", w), pos, true
 }
 
@@ -104,6 +106,7 @@ func jmp_absolutelong(pos uint32) (disassembled string, newpos uint32, done bool
 func jmp_absolutelongindirect(pos uint32) (disassembled string, newpos uint32, done bool) {
 	l, pos := getlong(pos)
 	addLongComment(pos - 3, l)
+	savedenvs[pos - 3] = saveenv()
 	return fmt.Sprintf("jmp\t($%04X)", l), pos, true
 }
 
@@ -134,6 +137,7 @@ func jsr_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 func jsr_absoluteindirectx(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
 	addPBRComment(pos - 3, pos, w)
+	savedenvs[pos - 3] = saveenv()
 	return fmt.Sprintf("jsr\t($%04X,x)", w), pos, false
 }
 
