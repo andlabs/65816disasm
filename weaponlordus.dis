@@ -97,3 +97,42 @@ dowordptr 2A278D 2A2762
 # jump table with jump at $2A60DA
 dowordptr 2A60DD 2A60DA
 dowordptr 2A60DF 2A60DA
+
+# jump table with jump at $2A619D
+dowordptr 2A61A0 2A619D
+dowordptr 2A61A2 2A619D
+dowordptr 2A61A4 2A619D
+dowordptr 2A61A6 2A619D
+dowordptr 2A61A8 2A619D
+
+# jump table with jump at $2AAE74
+dowordptr 2AAE77 2AAE74
+dowordptr 2AAE79 2AAE74
+dowordptr 2AAE7B 2AAE74
+dowordptr 2AAE7D 2AAE74
+dowordptr 2AAE7F 2AAE74
+dowordptr 2AAE81 2AAE74
+dowordptr 2AAE83 2AAE74
+dowordptr 2AAE85 2AAE74
+
+# jump table with jump at $2AB011, also $2AB2C8, $2AB596, $2AB872
+dowordptr 2AAE87 2AB011
+dowordptr 2AAE89 2AB011
+dowordptr 2AAE8B 2AB011
+dowordptr 2AAE8D 2AB011
+
+# jump table with jump at $2AB9F9
+dowordptr 2AB9FC 2AB9F9
+dowordptr 2AB9FE 2AB9F9
+dowordptr 2ABA00 2AB9F9
+dowordptr 2ABA02 2AB9F9
+dowordptr 2ABA04 2AB9F9
+dowordptr 2ABA06 2AB9F9
+dowordptr 2ABA08 2AB9F9
+dowordptr 2ABA0A 2AB9F9
+
+# jump table with jump at $2ABBF2, also $2ABF2F, $2AC1FD, $2AC4D9
+dowordptr 2ABA0C 2ABBF2
+dowordptr 2ABA0E 2ABBF2
+dowordptr 2ABA10 2ABBF2
+dowordptr 2ABA12 2ABBF2
