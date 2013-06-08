@@ -12,8 +12,12 @@ func addoperandcomment(pos uint32, logical uint32, addr string) {
 			addr, logical, physical)
 		return
 	}
-	addcomment(pos, "%s $%06X",
-		addr, logical)
+	if addr != "" {
+		addcomment(pos, "%s $%06X",
+			addr, logical)
+	} else {
+		addcomment(pos, "$%06X", logical)
+	}
 }
 
 // hhll and the like

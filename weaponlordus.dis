@@ -93,3 +93,7 @@ dowordptr 2A2787 2A2762
 dowordptr 2A2789 2A2762
 dowordptr 2A278B 2A2762
 dowordptr 2A278D 2A2762
+
+# jump table with jump at $2A60DA
+dowordptr 2A60DD 2A60DA
+dowordptr 2A60DF 2A60DA
