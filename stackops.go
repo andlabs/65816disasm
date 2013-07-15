@@ -9,7 +9,7 @@ import (
 func pea_absolute(pos uint32) (disassembled string, newpos uint32, done bool) {
 	w, pos := getword(pos)
 	pushword(w, true)
-	addDBRComment(pos - 3, w)		// just in case
+	addpeaComment(pos - 3, w)		// just in case
 	return fmt.Sprintf("pea\t$%04X", w), pos, false
 }
 

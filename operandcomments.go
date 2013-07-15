@@ -87,3 +87,9 @@ func addPBRComment(pos uint32, xpos uint32, addr uint16) {
 	// TODO combine into one comment?
 	addcomment(pos, "pbr = $%02X", env.pbr)
 }
+
+// hhll, for pea
+func addpeaComment(pos uint32, addr uint16) {
+	logical := uint32(addr)
+	addoperandcomment(pos, logical, fmt.Sprintf("$%04X ->", addr))
+}
