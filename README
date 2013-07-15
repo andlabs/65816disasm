@@ -43,6 +43,7 @@ So far I have only tested this on:
 	- Columns (though so far only to make sure HighROM works; will do an analysis later)
 	- Jaki Crush (I was curious; with it I found a bug in LowROM handling)
 	- WeaponLord; language was expanded to help search for specific code and an example script for the US version is included
+	- Dragon: The Bruce Lee Story (seems to jump to a bad address via pea/rts...?)
 
 This package is go get-table, and does not rely on any external libraries.
 
