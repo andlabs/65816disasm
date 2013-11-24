@@ -60,3 +60,4 @@ Thanks to:
 
 TODOs
 - looks like I'll need to follow x for Columns to work properly; it loads the d register from there
+- Shin Megami Tensei init routine messes up some opcodes because P is changed after a branch is taken; provide a way to save flag values there
