@@ -4,17 +4,34 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"flag"
 )
 
 func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
 	origpos := pos - 1
 	b, pos := getbyte(pos)
 	offset := int32(int8(b))
-	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
+	
+	// this is stupid
+	banksize := uint32(0x8000)
+	if flag.Arg(1) == "highrom" {
+		banksize = 0x10000
+	}
+	
+	if (origpos & banksize) != (bpos & banksize)  {
+		fmt.Fprintf(os.Stderr, "cannot follow branch at $%X as it crosses a bank boundary\n", pos)
+		mklabel(origpos, "invalid", lpUser)
+		return origpos, pos
+	}
+
 	mklabel(bpos, "loc", lpLoc)
 	if bpos != origpos {		// avoid endless recursion on branch to self
+		// should this depend on -isolatesubs?
+		var saved *envt = saveenv()
 		disassemble(bpos)
+		restoreenv(saved)
 	}
 	return bpos, pos
 }
@@ -23,11 +40,26 @@ func dolongbranch(pos uint32) (labelpos uint32, newpos uint32) {
 	origpos := pos - 1
 	w, pos := getword(pos)
 	offset := int32(int16(w))
-	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
+
+	// this is stupid
+	banksize := uint32(0x8000)
+	if flag.Arg(1) == "highrom" {
+		banksize = 0x10000
+	}
+	
+	if (origpos & banksize) != (bpos & banksize)  {
+		fmt.Fprintf(os.Stderr, "cannot follow branch at $%X as it crosses a bank boundary\n", pos)
+		mklabel(origpos, "invalid", lpUser)
+		return origpos, pos
+	}
+
 	mklabel(bpos, "loc", lpLoc)
 	if bpos != origpos {		// avoid endless recursion on branch to self
+		// should this depend on -isolatesubs?
+		var saved *envt = saveenv()
 		disassemble(bpos)
+		restoreenv(saved)
 	}
 	return bpos, pos
 }
