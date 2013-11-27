@@ -5,7 +5,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"flag"
 )
 
 func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
@@ -14,12 +13,7 @@ func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
 	offset := int32(int8(b))
 	bpos := uint32(int32(pos) + offset)
 	
-	// this is stupid
-	banksize := uint32(0x8000)
-	if flag.Arg(1) == "highrom" {
-		banksize = 0x10000
-	}
-	
+	banksize := memmap.BankSize()
 	if (origpos & banksize) != (bpos & banksize)  {
 		fmt.Fprintf(os.Stderr, "cannot follow branch at $%X as it crosses a bank boundary\n", pos)
 		mklabel(origpos, "invalid", lpUser)
@@ -42,12 +36,7 @@ func dolongbranch(pos uint32) (labelpos uint32, newpos uint32) {
 	offset := int32(int16(w))
 	bpos := uint32(int32(pos) + offset)
 
-	// this is stupid
-	banksize := uint32(0x8000)
-	if flag.Arg(1) == "highrom" {
-		banksize = 0x10000
-	}
-	
+	banksize := memmap.BankSize()
 	if (origpos & banksize) != (bpos & banksize)  {
 		fmt.Fprintf(os.Stderr, "cannot follow branch at $%X as it crosses a bank boundary\n", pos)
 		mklabel(origpos, "invalid", lpUser)

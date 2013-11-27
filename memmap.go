@@ -8,6 +8,7 @@ import (
 type MemoryMap interface {
 	Physical(logical uint32) (physical uint32, inROM bool)
 	BankComment(bank byte) (bankComment string)
+	BankSize() uint32
 }
 
 var memmap MemoryMap
@@ -44,6 +45,10 @@ func (lowrom) BankComment(bank byte) (bankComment string) {
 		return fmt.Sprintf("bank $%02X -> RAM", bank)
 	}
 	return fmt.Sprintf("bank $%02X -> reserved", bank)
+}
+
+func (lowrom) BankSize() uint32 {
+	return 0x8000
 }
 
 // TODO HighROM or HiROM?
@@ -95,6 +100,10 @@ func (highrom) BankComment(bank byte) (bankComment string) {
 		return fmt.Sprintf("bank $%02X -> RAM", bank)
 	}
 	return fmt.Sprintf("bank $%02X -> reserved", bank)
+}
+
+func (highrom) BankSize() uint32 {
+	return 0x10000
 }
 
 var memmaps = map[string]MemoryMap{
