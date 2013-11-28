@@ -125,7 +125,7 @@ func op_indirectlongy(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
 		b, pos := getbyte(pos)
-		addDirectLongComment(pos - 2, b)
+		addDirectComment(pos - 2, b)
 		return fmt.Sprintf("%s\t[$%02X],y", m, b), pos, false
 	}
 }
@@ -135,7 +135,7 @@ func op_indirectlong(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
 		b, pos := getbyte(pos)
-		addDirectLongComment(pos - 2, b)
+		addDirectComment(pos - 2, b)
 		return fmt.Sprintf("%s\t[$%02X]", m, b), pos, false
 	}
 }
@@ -155,7 +155,7 @@ func op_direct(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
 		b, pos := getbyte(pos)
-		addDirectLongComment(pos - 2, b)		// base bank is always zero
+		addDirectComment(pos - 2, b)		// base bank is always zero
 		return fmt.Sprintf("%s\t$%02X", m, b), pos, false
 	}
 }
