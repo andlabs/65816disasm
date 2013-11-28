@@ -10,7 +10,12 @@ func print() {
 	lbu32 := uint32(len(bytes))
 	for i := uint32(0); i < lbu32; i++ {
 		if label, ok := labels[i]; ok {
-			fmt.Printf("%s:\n", label)
+			logical, mirror := memmap.Logical(i)
+			if logical != mirror {
+				fmt.Printf("%s: ; $%06X / $%06X\n", label, logical, mirror)
+			} else {
+				fmt.Printf("%s: ; $%06X\n", label, logical)
+			}
 		}
 		if instruction, ok := instructions[i]; ok && instruction != operandString {
 			if labelpos, ok := labelplaces[i]; ok {		// need to add a label

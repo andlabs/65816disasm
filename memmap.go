@@ -7,6 +7,7 @@ import (
 
 type MemoryMap interface {
 	Physical(logical uint32) (physical uint32, inROM bool)
+	Logical(physical uint32) (logical uint32, mirror uint32)
 	BankComment(bank byte) (bankComment string)
 	BankSize() uint32
 }
@@ -30,6 +31,12 @@ func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
 	}
 	// TODO convert mirrors to their canonical form?
 	return logical, false		// otherwise take the logical address as it is
+}
+
+func (lowrom) Logical(physical uint32) (logical uint32, mirror uint32) {
+	bank := (physical << 1) & 0x5F0000
+	bank |= (physical & 0x7FFF) | 0x8000
+	return bank, bank | 0x800000
 }
 
 func (lowrom) BankComment(bank byte) (bankComment string) {
@@ -74,6 +81,15 @@ func (highrom) Physical(logical uint32) (physical uint32, inROM bool) {
 	}
 	// TODO convert mirrors to their canonical form?
 	return logical, false		// otherwise take the logical address as it is
+}
+
+func (highrom) Logical(physical uint32) (logical uint32, mirror uint32) {
+	base := physical & 0xFFFF
+	if base >= 0x8000 {
+		return physical | 0xC00000, physical
+	}
+	physical |= 0xC00000
+	return physical, physical
 }
 
 func (highrom) BankComment(bank byte) (bankComment string) {
