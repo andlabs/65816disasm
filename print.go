@@ -24,7 +24,7 @@ func print() {
 				}
 				instruction = fmt.Sprintf(instruction, labels[labelpos])
 			}
-			fmt.Printf("\t%s\t\t; $%X", instruction, i)
+			fmt.Printf("\t%-20s\t; $%X", instruction, i)
 			if comment, ok := comments[i]; ok {
 				fmt.Printf(" | %s", comment)
 			}
