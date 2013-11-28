@@ -88,10 +88,6 @@ func xce_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 		stop = true
 	} else {
 		env.carryflag, env.e = env.e, env.carryflag
-		env.x.value = env.e.value
-		env.x.known = true
-		env.m.value = env.e.value
-		env.m.known = true
 	}
 	return fmt.Sprintf("xce"), pos, stop
 }

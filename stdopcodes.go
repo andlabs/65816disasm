@@ -164,11 +164,11 @@ func op_direct(m string) opcode {
 func op_immediate(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
-		if !env.m.known {
+		if !env.e.known || !env.m.known {
 			addcomment(pos - 1, "(!) cannot disassemble opcode with immediate operand because size unknown")
 			return fmt.Sprintf("%s\t???", m), pos, true
 		} else {
-			if env.m.value == 0 {
+			if env.e.value | env.m.value == 0 {
 				w, pos := getword(pos)
 				return fmt.Sprintf("%s\t#$%04X", m, w), pos, false
 			} else {
@@ -210,11 +210,11 @@ func op_indirectstack(m string) opcode {
 func op_immediateindex(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		makeAUnknown()
-		if !env.x.known {
+		if !env.e.known || !env.x.known {
 			addcomment(pos - 1, "(!) cannot disassemble index register opcode with immediate operand because size unknown")
 			return fmt.Sprintf("%s\t???", m), pos, true
 		} else {
-			if env.x.value == 0 {
+			if env.e.value | env.x.value == 0 {
 				w, pos := getword(pos)
 				return fmt.Sprintf("%s\t#$%04X", m, w), pos, false
 			} else {
