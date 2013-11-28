@@ -58,7 +58,11 @@ func op_branch(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		labelpos, pos := dobranch(pos)
 		labelplaces[pos - 2] = labelpos
-		return fmt.Sprintf("%s\t%%s", m), pos, false
+		// don't disassemble past unconditional branches
+		// (since it'll either try to disassemble non-code or code that would ideally
+		// still get disassembled anyway)
+		done = m == "bra"
+		return fmt.Sprintf("%s\t%%s", m), pos, done
 	}
 }
 
@@ -66,7 +70,7 @@ func op_branch(m string) opcode {
 func brl_pcrelativeword(pos uint32) (disassembled string, newpos uint32, done bool) {
 	labelpos, pos := dolongbranch(pos)
 	labelplaces[pos - 3] = labelpos
-	return fmt.Sprintf("brl\t%%s"), pos, false
+	return fmt.Sprintf("brl\t%%s"), pos, true // don't disassemble past unconditional branches
 }
 
 // jmp hhll
