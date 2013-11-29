@@ -33,11 +33,11 @@ func per_pcrelativeword(pos uint32) (disassembled string, newpos uint32, done bo
 // pha
 func pha_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
-	if !env.m.known {
+	if !env.e.known || !env.m.known {
 		addcomment(pos - 1, "(!) cannot push a because size is not known")
 		stop = true
 	} else {
-		if env.m.value == 0 {
+		if env.e.value | env.m.value == 0 {
 			pushword(env.a.value, env.a.known)
 		} else {
 			pushbyte(byte(env.a.value & 0xFF), env.a.known)
@@ -75,11 +75,11 @@ func php_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 // phx
 func phx_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
-	if !env.x.known {
+	if !env.e.known || !env.x.known {
 		addcomment(pos - 1, "(!) cannot push x because size is not known")
 		stop = true
 	} else {
-		if env.x.value == 0 {			// we don't track x so push dummies
+		if env.e.value | env.x.value == 0 {			// we don't track x so push dummies
 			pushword(0, false)
 		} else {
 			pushbyte(0, false)
@@ -91,11 +91,11 @@ func phx_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 // phy
 func phy_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
-	if !env.x.known {
+	if !env.e.known || !env.x.known {
 		addcomment(pos - 1, "(!) cannot push y because size is not known")
 		stop = true
 	} else {
-		if env.x.value == 0 {			// we don't track y so push dummies
+		if env.e.value | env.x.value == 0 {			// we don't track y so push dummies
 			pushword(0, false)
 		} else {
 			pushbyte(0, false)
@@ -107,11 +107,11 @@ func phy_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 // pla
 func pla_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
-	if !env.m.known {
+	if !env.e.known || !env.m.known {
 		addcomment(pos - 1, "(!) cannot pop a because size is not known")
 		stop = true
 	} else {
-		if env.m.value == 0 {
+		if env.e.value | env.m.value == 0 {
 			env.a.value, env.a.known = popword()
 		} else {
 			v, k := popbyte()
@@ -144,11 +144,11 @@ func plp_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 // plx
 func plx_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
-	if !env.x.known {
+	if !env.e.known || !env.x.known {
 		addcomment(pos - 1, "(!) cannot pop x because size is not known")
 		stop = true
 	} else {
-		if env.x.value == 0 {			// we don't track x so discared popped value
+		if env.e.value | env.x.value == 0 {			// we don't track x so discared popped value
 			popword()
 		} else {
 			popbyte()
@@ -160,11 +160,11 @@ func plx_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 // ply
 func ply_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
 	stop := false
-	if !env.x.known {
+	if !env.e.known || !env.x.known {
 		addcomment(pos - 1, "(!) cannot pop y because size is not known")
 		stop = true
 	} else {
-		if env.x.value == 0 {			// we don't track y so discared popped value
+		if env.e.value | env.x.value == 0 {			// we don't track y so discared popped value
 			popword()
 		} else {
 			popbyte()

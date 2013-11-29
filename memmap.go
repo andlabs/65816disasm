@@ -34,7 +34,7 @@ func (lowrom) Physical(logical uint32) (physical uint32, inROM bool) {
 }
 
 func (lowrom) Logical(physical uint32) (logical uint32, mirror uint32) {
-	bank := (physical << 1) & 0x5F0000
+	bank := (physical << 1) & 0x7F0000
 	bank |= (physical & 0x7FFF) | 0x8000
 	return bank, bank | 0x800000
 }
