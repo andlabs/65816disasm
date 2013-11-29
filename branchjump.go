@@ -22,7 +22,7 @@ func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
 
 	mklabel(bpos, "loc", lpLoc)
 	if bpos != origpos {		// avoid endless recursion on branch to self
-		// should this depend on -isolatesubs?
+		// TODO should this depend on -isolatesubs?
 		var saved *envt = saveenv()
 		disassemble(bpos)
 		restoreenv(saved)
@@ -45,7 +45,7 @@ func dolongbranch(pos uint32) (labelpos uint32, newpos uint32) {
 
 	mklabel(bpos, "loc", lpLoc)
 	if bpos != origpos {		// avoid endless recursion on branch to self
-		// should this depend on -isolatesubs?
+		// TODO should this depend on -isolatesubs?
 		var saved *envt = saveenv()
 		disassemble(bpos)
 		restoreenv(saved)
