@@ -52,23 +52,6 @@ func addDirectComment(pos uint32, addr byte) {
 		fmt.Sprintf("$%02X + d=$%04X ->", addr, env.direct.value))
 }
 
-// [nn] and the like
-func addDirectLongComment(pos uint32, addr byte) {
-	if !env.direct.known {
-		addcomment(pos, "$%02X - cannot get physical address because d is unknown at time of disassembly", addr)
-		return
-	}
-	logical := (uint32(env.direct.value) + uint32(addr)) & 0xFFFF		// keep in bank
-	if !env.dbr.known {
-		addcomment(pos, "$%02X - cannot get physical address because dbr is unknown at time of disassembly", addr)
-		return
-	}
-	logical |= uint32(env.dbr.value) << 16
-	addoperandcomment(pos, logical,
-		fmt.Sprintf("$%02X + d=$%04X + dbr=$%02X ->",
-			addr, env.direct.value, env.dbr.value))
-}
-
 // used for (nn,s),y to inform what the dbr is for the indirection
 // TODO add a proper addStackComment and addIndirectStackComment instead
 func addDBRReminderComment(pos uint32) {

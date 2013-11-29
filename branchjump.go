@@ -4,17 +4,28 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func dobranch(pos uint32) (labelpos uint32, newpos uint32) {
 	origpos := pos - 1
 	b, pos := getbyte(pos)
 	offset := int32(int8(b))
-	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
+	
+	banksize := memmap.BankSize()
+	if (origpos & banksize) != (bpos & banksize)  {
+		fmt.Fprintf(os.Stderr, "cannot follow branch at $%X as it crosses a bank boundary\n", pos)
+		mklabel(origpos, "invalid", lpUser)
+		return origpos, pos
+	}
+
 	mklabel(bpos, "loc", lpLoc)
 	if bpos != origpos {		// avoid endless recursion on branch to self
+		// should this depend on -isolatesubs?
+		var saved *envt = saveenv()
 		disassemble(bpos)
+		restoreenv(saved)
 	}
 	return bpos, pos
 }
@@ -23,11 +34,21 @@ func dolongbranch(pos uint32) (labelpos uint32, newpos uint32) {
 	origpos := pos - 1
 	w, pos := getword(pos)
 	offset := int32(int16(w))
-	// TODO does not properly handle jumps across page boundaries
 	bpos := uint32(int32(pos) + offset)
+
+	banksize := memmap.BankSize()
+	if (origpos & banksize) != (bpos & banksize)  {
+		fmt.Fprintf(os.Stderr, "cannot follow branch at $%X as it crosses a bank boundary\n", pos)
+		mklabel(origpos, "invalid", lpUser)
+		return origpos, pos
+	}
+
 	mklabel(bpos, "loc", lpLoc)
 	if bpos != origpos {		// avoid endless recursion on branch to self
+		// should this depend on -isolatesubs?
+		var saved *envt = saveenv()
 		disassemble(bpos)
+		restoreenv(saved)
 	}
 	return bpos, pos
 }
@@ -37,7 +58,11 @@ func op_branch(m string) opcode {
 	return func(pos uint32) (disassembled string, newpos uint32, done bool) {
 		labelpos, pos := dobranch(pos)
 		labelplaces[pos - 2] = labelpos
-		return fmt.Sprintf("%s\t%%s", m), pos, false
+		// don't disassemble past unconditional branches
+		// (since it'll either try to disassemble non-code or code that would ideally
+		// still get disassembled anyway)
+		done = m == "bra"
+		return fmt.Sprintf("%s\t%%s", m), pos, done
 	}
 }
 
@@ -45,7 +70,7 @@ func op_branch(m string) opcode {
 func brl_pcrelativeword(pos uint32) (disassembled string, newpos uint32, done bool) {
 	labelpos, pos := dolongbranch(pos)
 	labelplaces[pos - 3] = labelpos
-	return fmt.Sprintf("brl\t%%s"), pos, false
+	return fmt.Sprintf("brl\t%%s"), pos, true // don't disassemble past unconditional branches
 }
 
 // jmp hhll
