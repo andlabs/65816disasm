@@ -60,8 +60,7 @@ func phd_noarguments(pos uint32) (disassembled string, newpos uint32, done bool)
 
 // phk
 func phk_noarguments(pos uint32) (disassembled string, newpos uint32, done bool) {
-	// TODO does this account for crossed bank?
-	pushbyte(byte((pos & 0xFF0000) >> 16), true)
+	pushbyte(env.pbr, true)
 	return fmt.Sprintf("phk"), pos, false
 }
 
