@@ -20,7 +20,7 @@ var commands = []struct {
 	{ "doauto", "auto-analyze vectors", c_doauto },		// TODO keep "vectors"?
 	{ "specialsub", "mark a subroutine as doing something special", c_specialsub },
 	{ "dowordptr", "mark a word as a pointer to code (with a pre-existing environment)", c_dowordptr },
-	{ "dowordmanual", "mark a word as code (with a pre-existing environment)", c_dowordmanual },
+	{ "domanual", "mark a word as code (with a pre-existing environment)", c_domanual },
 }
 
 // the map key is a logical address
@@ -115,16 +115,16 @@ func c_dowordptr(fields []string) {
 	}
 }
 
-func c_dowordmanual(fields []string) {
+func c_domanual(fields []string) {
 	if len(fields) != 2 {
-		fmt.Fprintf(os.Stderr, "dowordmanual usage: dowordptr sub-address env-address\n")
+		fmt.Fprintf(os.Stderr, "domanual usage: dowordptr sub-address env-address\n")
 		return
 	}
 
 	// TODO addr and envaddr must be bare hex numbers with this
 	addr64, err := strconv.ParseUint(fields[0], 16, 32)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "dowordmanual error: invalid address hex number %q: %v", fields[0], err)
+		fmt.Fprintf(os.Stderr, "domanual error: invalid address hex number %q: %v", fields[0], err)
 		return
 	}
 	addr := uint32(addr64)
@@ -145,16 +145,16 @@ func c_dowordmanual(fields []string) {
 		cplogical := (uint32(env.pbr) << 16) | addr
 		cpaddr, inROM := memmap.Physical(cplogical)
 		if !inROM {
-			fmt.Fprintf(os.Stderr, "dowordmanual error: new address $%06X ($%06X physical) not in ROM\n", cplogical, cpaddr)
+			fmt.Fprintf(os.Stderr, "domanual error: new address $%06X ($%06X physical) not in ROM\n", cplogical, cpaddr)
 			return
 		}
-		fmt.Fprintf(os.Stderr, "dowordmanual info: new address added to code: $%06X ($%06X physical)\n", cplogical, cpaddr)
+		fmt.Fprintf(os.Stderr, "domanual info: new address added to code: $%06X ($%06X physical)\n", cplogical, cpaddr)
 		mklabel(cpaddr, "sub", lpSub)
 		restoreenv(env)
 		disassemble(cpaddr)
 		labelplaces[addr] = cpaddr
 	} else {
-		fmt.Fprintf(os.Stderr, "dowordmanual error: no environment available for environment $%06X (from $%06X)\n", envaddr, addr)
+		fmt.Fprintf(os.Stderr, "domanual error: no environment available for environment $%06X (from $%06X)\n", envaddr, addr)
 		return
 	}
 }    
